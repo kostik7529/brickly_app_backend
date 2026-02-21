@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <include file="db.changelog/1.0/2026-02-14--0001-user.xml"/>
+    <include file="db.changelog/1.0/2026-02-14--0002-authority.xml"/>
+    <include file="db.changelog/1.0/2026-02-14--0003-user-authority.xml"/>
+    <include file="db.changelog/1.0/2026-02-18--0004-feedback.xml"/>
+
+    <include file="db.changelog/data/2026-02-14--0001-user-data.xml"/>
+    <include file="db.changelog/data/2026-02-14--0002-authority-data.xml"/>
+    <include file="db.changelog/data/2026-02-14--0003-user-authority-data.xml"/>
+    <include file="db.changelog/data/2026-02-18--0004-feedback-data.xml"/>
+</databaseChangeLog>
