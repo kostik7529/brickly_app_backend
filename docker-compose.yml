@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: brickly-postgres
+    environment:
+      POSTGRES_DB: bricklydb
+      POSTGRES_USER: bricklyuser
+      POSTGRES_PASSWORD: bricklypass
+    ports:
+      - "5433:5432"  # 5433 чтобы не ебаться с локальным постгресом
+    volumes:
+      - brickly_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bricklyuser -d bricklydb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: brickly-app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      # Эти переменные переопределят то что в application.yml
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bricklydb
+      SPRING_DATASOURCE_USERNAME: bricklyuser
+      SPRING_DATASOURCE_PASSWORD: bricklypass
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  brickly_postgres_data:

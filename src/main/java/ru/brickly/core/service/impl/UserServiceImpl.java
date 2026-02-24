@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.brickly.core.dto.UserCreateDTO;
 import ru.brickly.core.dto.UserDefaultDTO;
 import ru.brickly.core.dto.UserFullDTO;
+import ru.brickly.core.dto.UserUpdateDTO;
 import ru.brickly.core.entity.Authority;
 import ru.brickly.core.entity.User;
 import ru.brickly.core.exception.UserAlreadyExistsException;
@@ -69,7 +70,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserFullDTO updateUser(Long id, UserFullDTO dto) {
+    public UserFullDTO updateUser(Long id, UserUpdateDTO dto) {
         if (userRepository.findByUsername(dto.getUsername()).isPresent()
                 && Objects.equals(userRepository.findByUsername(dto.getUsername()).get().getUsername(),
                 userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found!")).getUsername())) {

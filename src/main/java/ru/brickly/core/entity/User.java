@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -36,4 +37,10 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Authority> authorities;
+
+    @OneToMany(mappedBy = "author")
+    private List<Feedback> authoredFeedbacks;
+
+    @OneToMany(mappedBy = "target")
+    private List<Feedback> targetedFeedbacks;
 }

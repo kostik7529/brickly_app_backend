@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import ru.brickly.core.dto.UserCreateDTO;
 import ru.brickly.core.dto.UserDefaultDTO;
 import ru.brickly.core.dto.UserFullDTO;
+import ru.brickly.core.dto.UserUpdateDTO;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface UserService {
 
     UserDefaultDTO createUser(UserCreateDTO dto);
 
-    UserFullDTO updateUser(Long id, UserFullDTO dto);
+    UserFullDTO updateUser(Long id, UserUpdateDTO dto);
 
     void deleteUser(Long id);
 }
