@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.brickly.core.dto.UserCreateDTO;
 import ru.brickly.core.dto.UserDefaultDTO;
 import ru.brickly.core.dto.UserFullDTO;
+import ru.brickly.core.dto.UserUpdateDTO;
 import ru.brickly.core.service.UserService;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<UserFullDTO> updateUser(@PathVariable Long id, @RequestBody UserFullDTO dto) {
+    public ResponseEntity<UserFullDTO> updateUser(@PathVariable Long id, @RequestBody UserUpdateDTO dto) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id, dto));
     }
 
