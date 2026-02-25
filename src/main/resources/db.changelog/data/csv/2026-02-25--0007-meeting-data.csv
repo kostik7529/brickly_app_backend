@@ -1,0 +1,3 @@
+date;address;type_id;ticket_price;description;discount_duration;discount_amount;discount_modifier
+2026-04-23;ул. Пушкина;1;400;Описание сходки;7;100;-1
+2026-09-28;ул. Колотушкина;2;500;Описание сходки;50;9;1
