@@ -10,6 +10,7 @@
     <include file="db.changelog/1.0/2026-02-24--0005-meeting-discount.xml"/>
     <include file="db.changelog/1.0/2026-02-24--0006-meeting-type.xml"/>
     <include file="db.changelog/1.0/2026-02-25--0007-meeting.xml"/>
+    <include file="db.changelog/1.0/2026-02-25--0008-ticket.xml"/>
 
     <include file="db.changelog/data/2026-02-14--0001-user-data.xml"/>
     <include file="db.changelog/data/2026-02-14--0002-authority-data.xml"/>
@@ -18,5 +19,6 @@
     <include file="db.changelog/data/2026-02-24--0005-meeting-discount-data.xml"/>
     <include file="db.changelog/data/2026-02-24--0006-meeting-type-data.xml"/>
     <include file="db.changelog/data/2026-02-25--0007-meeting-data.xml"/>
+    <include file="db.changelog/data/2026-02-25--0008-ticket-data.xml"/>
 
 </databaseChangeLog>

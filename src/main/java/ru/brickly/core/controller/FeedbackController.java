@@ -21,26 +21,26 @@ import java.util.List;
 public class FeedbackController {
     private final FeedbackService feedbackService;
 
-    @GetMapping("/by_target/{target_id}")
-    public ResponseEntity<List<FeedbackDefaultDTO>> getAllTargetFeedbacks(@PathVariable Long target_id) {
-        return ResponseEntity.ok(feedbackService.getAllTargetFeedbacks(target_id));
+    @GetMapping("/by_target_id/{targetId}")
+    public ResponseEntity<List<FeedbackDefaultDTO>> getAllTargetFeedbacks(@PathVariable Long targetId) {
+        return ResponseEntity.ok(feedbackService.getAllTargetFeedbacks(targetId));
     }
 
-    @GetMapping("/by_target/{target_id}/paginated")
-    public ResponseEntity<Page<FeedbackDefaultDTO>> getAllTargetFeedbacksPaginated(@PathVariable Long target_id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    @GetMapping("/by_target_id/{target_id}/paginated")
+    public ResponseEntity<Page<FeedbackDefaultDTO>> getAllTargetFeedbacksPaginated(@PathVariable Long targetId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(feedbackService.getAllTargetFeedbacksPaginated(target_id, pageable));
+        return ResponseEntity.ok(feedbackService.getAllTargetFeedbacksPaginated(targetId, pageable));
     }
 
-    @GetMapping("/by_author/{author_id}")
-    public ResponseEntity<List<FeedbackDefaultDTO>> getAllAuthorFeedbacks(@PathVariable Long author_id) {
-        return ResponseEntity.ok(feedbackService.getAllAuthorFeedbacks(author_id));
+    @GetMapping("/by_author_id/{authorId}")
+    public ResponseEntity<List<FeedbackDefaultDTO>> getAllAuthorFeedbacks(@PathVariable Long authorId) {
+        return ResponseEntity.ok(feedbackService.getAllAuthorFeedbacks(authorId));
     }
 
-    @GetMapping("/by_author/{author_id}/paginated")
-    public ResponseEntity<Page<FeedbackDefaultDTO>> getAllAuthorFeedbacksPaginated(@PathVariable Long author_id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    @GetMapping("/by_author_id/{authorId}/paginated")
+    public ResponseEntity<Page<FeedbackDefaultDTO>> getAllAuthorFeedbacksPaginated(@PathVariable Long authorId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(feedbackService.getAllAuthorFeedbacksPaginated(author_id, pageable));
+        return ResponseEntity.ok(feedbackService.getAllAuthorFeedbacksPaginated(authorId, pageable));
     }
 
     @PostMapping("/create")
@@ -53,7 +53,7 @@ public class FeedbackController {
         return ResponseEntity.ok(feedbackService.updateFeedback(id, dto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteFeedbackById(@PathVariable Long id) {
         feedbackService.deleteFeedback(id);
         return ResponseEntity.noContent().build();

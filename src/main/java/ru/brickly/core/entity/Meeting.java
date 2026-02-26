@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Entity
@@ -37,4 +38,7 @@ public class Meeting {
 
     @Column(name = "discount_modifier")
     private Integer discountModifier;
+
+    @OneToMany(mappedBy = "meeting")
+    private Set<Ticket> tickets;
 }
