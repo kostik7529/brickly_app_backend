@@ -43,4 +43,7 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "target")
     private List<Feedback> targetedFeedbacks;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Ticket> tickets;
 }

@@ -2,6 +2,7 @@ package ru.brickly.core.util;
 
 import lombok.experimental.UtilityClass;
 import ru.brickly.core.dto.MeetingDefaultDTO;
+import ru.brickly.core.dto.MeetingShortDTO;
 import ru.brickly.core.entity.Meeting;
 
 @UtilityClass
@@ -18,5 +19,16 @@ public class MeetingMapper {
         meetingDefaultDTO.setDiscountDuration(meeting.getDiscountDuration());
         meetingDefaultDTO.setDiscountModifier(meeting.getDiscountModifier());
         return meetingDefaultDTO;
+    }
+
+    public MeetingShortDTO convertToShortDto(Meeting meeting) {
+        MeetingShortDTO meetingShortDTO = new MeetingShortDTO();
+        meetingShortDTO.setId(meeting.getId());
+        meetingShortDTO.setAddress(meeting.getAddress());
+        meetingShortDTO.setDate(meeting.getDate());
+        meetingShortDTO.setDescription(meeting.getDescription());
+        meetingShortDTO.setType(MeetingTypeMapper.convertToDefaultDto(meeting.getType()));
+        return meetingShortDTO;
+
     }
 }
