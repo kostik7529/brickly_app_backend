@@ -38,12 +38,12 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Authority> authorities;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Feedback> authoredFeedbacks;
 
-    @OneToMany(mappedBy = "target")
+    @OneToMany(mappedBy = "target", cascade = CascadeType.ALL)
     private List<Feedback> targetedFeedbacks;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Ticket> tickets;
 }

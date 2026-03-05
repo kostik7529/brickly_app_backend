@@ -39,6 +39,6 @@ public class Meeting {
     @Column(name = "discount_modifier")
     private Integer discountModifier;
 
-    @OneToMany(mappedBy = "meeting")
+    @OneToMany(mappedBy = "meeting", cascade = CascadeType.ALL)
     private Set<Ticket> tickets;
 }
