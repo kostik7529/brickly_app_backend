@@ -20,7 +20,7 @@ import java.util.List;
 public class TicketController {
     private final TicketService ticketService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/by_id/{id}")
     public ResponseEntity<TicketDefaultDTO> getTicketById(@PathVariable Long id) {
         return ResponseEntity.ok(ticketService.getTicketById(id));
     }

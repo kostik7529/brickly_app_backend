@@ -36,7 +36,7 @@ public class ElementController {
         return ResponseEntity.ok(elementService.getElementsByPartIdPaginated(partId, pageable));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/by_id/{id}")
     public ResponseEntity<ElementDefaultDTO> getElementById(@PathVariable String id) {
         return ResponseEntity.ok(elementService.getElementById(id));
     }

@@ -77,4 +77,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleElementIdAlreadyExistsException(ElementIdAlreadyExistsException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(MinifigNotFoundException.class)
+    public ResponseEntity<String> handleMinifigNotFoundException(MinifigNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MinifigIdAlreadyExistsException.class)
+    public ResponseEntity<String> handleMinifigIdAlreadyExistsException(MinifigIdAlreadyExistsException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }
