@@ -13,6 +13,7 @@
     <include file="db.changelog/1.0/2026-03-03--0008-color.xml"/>
     <include file="db.changelog/1.0/2026-03-03--0009-part-category.xml"/>
     <include file="db.changelog/1.0/2026-03-05--0010-part.xml"/>
+    <include file="db.changelog/1.0/2026-03-05--0011-element.xml"/>
 
     <include file="db.changelog/data/2026-02-14--0001-user-data.xml"/>
     <include file="db.changelog/data/2026-02-14--0002-authority-data.xml"/>
@@ -24,5 +25,6 @@
     <include file="db.changelog/data/2026-03-03--0008-color-data.xml"/>
     <include file="db.changelog/data/2026-03-03--0009-part-category-data.xml"/>
     <include file="db.changelog/data/2026-03-05--0010-part-data.xml"/>
+    <include file="db.changelog/data/2026-03-05--0011-element-data.xml"/>
 
 </databaseChangeLog>

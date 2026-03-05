@@ -10,6 +10,8 @@ import ru.brickly.core.dto.ColorUpdateDTO;
 import java.util.List;
 
 public interface ColorService {
+    ColorDefaultDTO getColorById(Integer id);
+
     List<ColorDefaultDTO> getAllColors();
 
     List<ColorShortDTO> getAllShortColors();
@@ -17,6 +19,8 @@ public interface ColorService {
     Page<ColorDefaultDTO> getColorsPaginated(Pageable pageable);
 
     Page<ColorShortDTO> getShortColorsPaginated(Pageable pageable);
+
+    Page<ColorDefaultDTO> getDefaultColorsByNameContainingPaginated(String nameContaining, Pageable pageable);
 
     ColorDefaultDTO updateColor(Integer id, ColorUpdateDTO dto);
 

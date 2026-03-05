@@ -20,6 +20,11 @@ import java.util.List;
 public class TicketController {
     private final TicketService ticketService;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<TicketDefaultDTO> getTicketById(@PathVariable Long id) {
+        return ResponseEntity.ok(ticketService.getTicketById(id));
+    }
+
     @GetMapping("/by_user_id/{userId}")
     public ResponseEntity<List<TicketDefaultDTO>> getAllTicketsByUserId(@PathVariable Long userId) {
         return ResponseEntity.ok(ticketService.getAllTicketsByUserId(userId));

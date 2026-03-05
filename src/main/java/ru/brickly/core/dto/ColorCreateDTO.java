@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ColorCreateDTO {
+    private int id;
     private String name;
     private String rgb;
     private boolean isTransparent;

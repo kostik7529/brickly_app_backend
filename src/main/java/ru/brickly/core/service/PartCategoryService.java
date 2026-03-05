@@ -9,6 +9,8 @@ import ru.brickly.core.dto.PartCategoryUpdateDTO;
 import java.util.List;
 
 public interface PartCategoryService {
+    PartCategoryDefaultDTO getPartCategoryById(Integer id);
+
     List<PartCategoryDefaultDTO> getAllPartCategories();
 
     Page<PartCategoryDefaultDTO> getPartCategoriesPaginated(Pageable pageable);

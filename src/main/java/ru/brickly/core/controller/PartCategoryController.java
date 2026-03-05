@@ -32,18 +32,23 @@ public class PartCategoryController {
         return ResponseEntity.ok(partCategoryService.getPartCategoriesPaginated(pageable));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PartCategoryDefaultDTO> getPartCategoryById(@PathVariable Integer id) {
+        return ResponseEntity.ok(partCategoryService.getPartCategoryById(id));
+    }
+
     @PostMapping("/create")
     public ResponseEntity<PartCategoryDefaultDTO> createPartCategory(@RequestBody PartCategoryCreateDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(partCategoryService.createPartCategory(dto));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<PartCategoryDefaultDTO> updatePartCategory(@PathVariable int id, @RequestBody PartCategoryUpdateDTO dto) {
+    public ResponseEntity<PartCategoryDefaultDTO> updatePartCategory(@PathVariable Integer id, @RequestBody PartCategoryUpdateDTO dto) {
         return ResponseEntity.ok(partCategoryService.updatePartCategory(id, dto));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deletePartCategoryById(@PathVariable int id) {
+    public ResponseEntity<Void> deletePartCategoryById(@PathVariable Integer id) {
         partCategoryService.deletePartCategoryById(id);
         return ResponseEntity.noContent().build();
     }

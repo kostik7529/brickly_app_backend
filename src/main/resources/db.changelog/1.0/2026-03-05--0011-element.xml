@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="2026-03-05--0011-element" author="kbadogin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="element"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="element">
+            <column name="element_id" type="VARCHAR(10)">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="part_num" type="VARCHAR(20)">
+                <constraints referencedTableName="part" referencedColumnNames="part_num" foreignKeyName="fk_part_num" nullable="false"/>
+            </column>
+
+            <column name="color_id" type="INTEGER">
+                <constraints referencedTableName="color" referencedColumnNames="id" foreignKeyName="fk_color" nullable="false"/>
+            </column>
+
+            <column name="design_id" type="INTEGER"/>
+
+        </createTable>
+
+
+    </changeSet>
+</databaseChangeLog>

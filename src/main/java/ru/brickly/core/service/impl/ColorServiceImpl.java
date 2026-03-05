@@ -9,18 +9,25 @@ import ru.brickly.core.dto.ColorDefaultDTO;
 import ru.brickly.core.dto.ColorShortDTO;
 import ru.brickly.core.dto.ColorUpdateDTO;
 import ru.brickly.core.entity.Color;
+import ru.brickly.core.exception.ColorIdAlreadyExistsException;
 import ru.brickly.core.exception.ColorNotFoundException;
 import ru.brickly.core.repository.ColorRepository;
 import ru.brickly.core.service.ColorService;
 import ru.brickly.core.util.ColorMapper;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ColorServiceImpl implements ColorService {
     private final ColorRepository colorRepository;
+
+    @Override
+    public ColorDefaultDTO getColorById(Integer id) {
+        return ColorMapper.convertToDefaultDto(colorRepository.findById(id).orElseThrow(() -> new ColorNotFoundException("Color with id " + id + " not found!")));
+    }
 
     @Override
     public List<ColorDefaultDTO> getAllColors() {
@@ -43,6 +50,11 @@ public class ColorServiceImpl implements ColorService {
     }
 
     @Override
+    public Page<ColorDefaultDTO> getDefaultColorsByNameContainingPaginated(String nameContaining, Pageable pageable) {
+        return colorRepository.findByNameContaining(nameContaining, pageable).map(ColorMapper::convertToDefaultDto);
+    }
+
+    @Override
     public ColorDefaultDTO updateColor(Integer id, ColorUpdateDTO dto) {
         Color color = colorRepository.findById(id).orElseThrow(() -> new ColorNotFoundException("Color with id " + id + " not found!"));
         color.setName(dto.getName());
@@ -57,7 +69,12 @@ public class ColorServiceImpl implements ColorService {
 
     @Override
     public ColorDefaultDTO createColor(ColorCreateDTO dto) {
+        Optional<Color> colorExistenceCheck = colorRepository.findById(dto.getId());
+        if (colorExistenceCheck.isPresent()) {
+            throw new ColorIdAlreadyExistsException("Color with id " + dto.getId() + " already exists!");
+        }
         Color color = new Color();
+        color.setId(dto.getId());
         color.setName(dto.getName());
         color.setRgb(dto.getRgb());
         color.setTransparent(dto.isTransparent());

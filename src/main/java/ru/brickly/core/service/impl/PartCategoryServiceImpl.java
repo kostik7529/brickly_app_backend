@@ -8,18 +8,25 @@ import ru.brickly.core.dto.PartCategoryCreateDTO;
 import ru.brickly.core.dto.PartCategoryDefaultDTO;
 import ru.brickly.core.dto.PartCategoryUpdateDTO;
 import ru.brickly.core.entity.PartCategory;
+import ru.brickly.core.exception.PartCategoryIdAlreadyExistsException;
 import ru.brickly.core.exception.PartCategoryNotFoundException;
 import ru.brickly.core.repository.PartCategoryRepository;
 import ru.brickly.core.service.PartCategoryService;
 import ru.brickly.core.util.PartCategoryMapper;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PartCategoryServiceImpl implements PartCategoryService {
     private final PartCategoryRepository partCategoryRepository;
+
+    @Override
+    public PartCategoryDefaultDTO getPartCategoryById(Integer id) {
+        return PartCategoryMapper.convertToDefaultDto(partCategoryRepository.findById(id).orElseThrow(() -> new PartCategoryNotFoundException("Part category with id " + id + " not found!")));
+    }
 
     @Override
     public List<PartCategoryDefaultDTO> getAllPartCategories() {
@@ -33,7 +40,12 @@ public class PartCategoryServiceImpl implements PartCategoryService {
 
     @Override
     public PartCategoryDefaultDTO createPartCategory(PartCategoryCreateDTO dto) {
+        Optional<PartCategory> partCategoryExistenceCheck = partCategoryRepository.findById(dto.getId());
+        if (partCategoryExistenceCheck.isPresent()) {
+            throw new PartCategoryIdAlreadyExistsException("Part category with id " + dto.getId() + " already exists!");
+        }
         PartCategory partCategory = new PartCategory();
+        partCategory.setId(dto.getId());
         partCategory.setName(dto.getName());
         return PartCategoryMapper.convertToDefaultDto(partCategoryRepository.save(partCategory));
     }

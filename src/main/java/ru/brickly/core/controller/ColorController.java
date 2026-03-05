@@ -21,6 +21,11 @@ import java.util.List;
 public class ColorController {
     private final ColorService colorService;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ColorDefaultDTO> getColorById(@PathVariable Integer id) {
+        return ResponseEntity.ok(colorService.getColorById(id));
+    }
+
     @GetMapping("/default")
     public ResponseEntity<List<ColorDefaultDTO>> getAllColors() {
         return ResponseEntity.ok(colorService.getAllColors());
@@ -41,6 +46,12 @@ public class ColorController {
     public ResponseEntity<Page<ColorShortDTO>> getShortColorsPaginated(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(colorService.getShortColorsPaginated(pageable));
+    }
+
+    @GetMapping("/default/by_name_containing/{nameContaining}/paginated")
+    public ResponseEntity<Page<ColorDefaultDTO>> getDefaultColorsByNameContainingPaginated(@PathVariable String nameContaining, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(colorService.getDefaultColorsByNameContainingPaginated(nameContaining, pageable));
     }
 
     @PutMapping("/update/{id}")
