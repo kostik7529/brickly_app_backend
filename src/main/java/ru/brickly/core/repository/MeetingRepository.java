@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface MeetingRepository extends JpaRepository<Meeting, Long> {
     @Override
-    @EntityGraph(attributePaths = {"meeting_type"})
+    @EntityGraph(attributePaths = {"type"})
     List<Meeting> findAll();
 }

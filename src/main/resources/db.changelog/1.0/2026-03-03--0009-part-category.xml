@@ -2,14 +2,14 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet id="2026-03-03--0009-part-categories" author="kbadogin">
+    <changeSet id="2026-03-03--0009-part-category" author="kbadogin">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="part_categories"/>
+                <tableExists tableName="part_category"/>
             </not>
         </preConditions>
 
-        <createTable tableName="part_categories">
+        <createTable tableName="part_category">
             <column name="id" type="INTEGER" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
