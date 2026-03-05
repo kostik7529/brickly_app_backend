@@ -31,6 +31,11 @@ public class TicketServiceImpl implements TicketService {
     private final MeetingRepository meetingRepository;
 
     @Override
+    public TicketDefaultDTO getTicketById(Long id) {
+        return TicketMapper.convertToDefaultDto(ticketRepository.findById(id).orElseThrow(() -> new TicketNotFoundException("Ticket with id " + id + " not found!")));
+    }
+
+    @Override
     public List<TicketDefaultDTO> getAllTicketsByMeetingId(Long meetingId) {
         return ticketRepository.findByMeetingId(meetingId).stream().map(TicketMapper::convertToDefaultDto).collect(Collectors.toList());
     }

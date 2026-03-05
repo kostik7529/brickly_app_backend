@@ -31,6 +31,11 @@ public class PartController {
         return ResponseEntity.ok(partService.getPartsPaginated(pageable));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PartDefaultDTO> getPartById(@PathVariable String id) {
+        return ResponseEntity.ok(partService.getPartById(id));
+    }
+
     @GetMapping("/with_id_containing/{idContaining}")
     public ResponseEntity<List<PartDefaultDTO>> getAllPartsWithIdContaining(@PathVariable String idContaining) {
         return ResponseEntity.ok(partService.getAllPartsWithIdContaining(idContaining));

@@ -9,6 +9,8 @@ import ru.brickly.core.dto.TicketUpdateDTO;
 import java.util.List;
 
 public interface TicketService {
+    TicketDefaultDTO getTicketById(Long id);
+
     List<TicketDefaultDTO> getAllTicketsByMeetingId(Long meetingId);
 
     Page<TicketDefaultDTO> getAllTicketsByMeetingIdPaginated(Long meetingId, Pageable pageable);

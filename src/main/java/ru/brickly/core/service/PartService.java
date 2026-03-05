@@ -10,6 +10,8 @@ import ru.brickly.core.entity.Part;
 import java.util.List;
 
 public interface PartService {
+    PartDefaultDTO getPartById(String id);
+
     List<PartDefaultDTO> getAllParts();
 
     Page<PartDefaultDTO> getPartsPaginated(Pageable pageable);
