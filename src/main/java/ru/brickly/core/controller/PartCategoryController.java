@@ -32,7 +32,7 @@ public class PartCategoryController {
         return ResponseEntity.ok(partCategoryService.getPartCategoriesPaginated(pageable));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/by_id/{id}")
     public ResponseEntity<PartCategoryDefaultDTO> getPartCategoryById(@PathVariable Integer id) {
         return ResponseEntity.ok(partCategoryService.getPartCategoryById(id));
     }

@@ -31,7 +31,7 @@ public class MeetingController {
         return ResponseEntity.ok(meetingService.getAllMeetingsPaginated(pageable));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/by_id/{id}")
     public ResponseEntity<MeetingDefaultDTO> getMeetingById(@PathVariable Long id) {
         return ResponseEntity.ok(meetingService.getMeetingById(id ));
     }

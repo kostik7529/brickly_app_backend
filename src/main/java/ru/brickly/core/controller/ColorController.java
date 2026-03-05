@@ -21,7 +21,7 @@ import java.util.List;
 public class ColorController {
     private final ColorService colorService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/by_id/{id}")
     public ResponseEntity<ColorDefaultDTO> getColorById(@PathVariable Integer id) {
         return ResponseEntity.ok(colorService.getColorById(id));
     }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="2026-03-05--0012-part-relationship" author="kbadogin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="part_relationship"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="part_relationship">
+
+            <column name="rel_type" type="VARCHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="child_part_num" type="VARCHAR(20)">
+                <constraints referencedTableName="part" referencedColumnNames="part_num" foreignKeyName="fk_relationship_child_part" nullable="false"/>
+            </column>
+
+            <column name="parent_part_num" type="VARCHAR(20)">
+                <constraints referencedTableName="part" referencedColumnNames="part_num" foreignKeyName="fk_relationship_arent_part" nullable="false"/>
+            </column>
+
+        </createTable>
+
+
+    </changeSet>
+</databaseChangeLog>
