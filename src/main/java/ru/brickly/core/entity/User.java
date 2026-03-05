@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private String password;
 
     @Column(name = "created_at")
-    private LocalTime createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "email")
     private String email;
