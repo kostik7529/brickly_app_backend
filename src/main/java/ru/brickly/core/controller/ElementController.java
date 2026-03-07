@@ -14,7 +14,7 @@ import ru.brickly.core.service.ElementService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/app/element")
+@RequestMapping("/api/app/elements")
 public class ElementController {
     private final ElementService elementService;
 

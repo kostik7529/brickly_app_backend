@@ -38,6 +38,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUserById(id));
     }
 
+    @GetMapping("/by_username/{username}")
+    public ResponseEntity<UserDefaultDTO> getUserByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(userService.getUserByUsername(username));
+    }
+
     @GetMapping("/exists/{username}")
     public ResponseEntity<String> checkUserExistence(@PathVariable String username) {
         userService.getUserByUsername(username);
