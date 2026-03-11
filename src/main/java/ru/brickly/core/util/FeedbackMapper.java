@@ -13,6 +13,7 @@ public class FeedbackMapper {
         feedbackDTO.setAuthor(UserMapper.convertToShortDto(feedback.getAuthor()));
         feedbackDTO.setComment(feedback.getComment());
         feedbackDTO.setTarget_id(feedback.getTarget().getId());
+        feedbackDTO.setModeration(feedback.getModeration());
         return feedbackDTO;
     }
 }

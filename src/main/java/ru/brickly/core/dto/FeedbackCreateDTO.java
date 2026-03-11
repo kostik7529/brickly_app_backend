@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class FeedbackCreateDTO {
     private long target_id;
-    private UserShortDTO author;
+    private long author_id;
     private int rate;
     private String comment;
 }

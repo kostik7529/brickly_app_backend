@@ -25,4 +25,7 @@ public class Feedback {
 
     @Column(name = "comment")
     private String comment;
+
+    @Column(name = "moderation")
+    private String moderation;
 }
