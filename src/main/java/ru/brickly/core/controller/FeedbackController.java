@@ -2,6 +2,8 @@ package ru.brickly.core.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +20,10 @@ import java.util.List;
 @RestController
 @RequestMapping("api/app/feedbacks")
 @RequiredArgsConstructor
+@Slf4j
 public class FeedbackController {
     private final FeedbackService feedbackService;
+    private final RabbitTemplate rabbitTemplate;
 
     @GetMapping("/by_target_id/{targetId}")
     public ResponseEntity<List<FeedbackDefaultDTO>> getAllTargetFeedbacks(@PathVariable Long targetId) {
@@ -45,7 +49,10 @@ public class FeedbackController {
 
     @PostMapping("/create")
     public ResponseEntity<FeedbackDefaultDTO> createFeedback(@RequestBody FeedbackCreateDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(feedbackService.createFeedback(dto));
+        FeedbackDefaultDTO result = feedbackService.createFeedback(dto);
+        log.info("Sending to rabbit: feedbackId={}", result.getId());
+        rabbitTemplate.convertAndSend("moderation.queue", result.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
     @PutMapping("/update/{id}")

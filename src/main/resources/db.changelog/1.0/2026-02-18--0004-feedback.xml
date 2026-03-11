@@ -28,7 +28,18 @@
 
             <column name="comment" type="VARCHAR(300)"/>
         </createTable>
-
-
     </changeSet>
+    
+    <changeSet id="2026-03-09--0004-feedback" author="kbadogin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists columnName="moderation" tableName="feedback"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="feedback">
+            <column name="moderation" type="VARCHAR(15)"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

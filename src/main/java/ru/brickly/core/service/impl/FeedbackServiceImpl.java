@@ -50,7 +50,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public FeedbackDefaultDTO createFeedback(FeedbackCreateDTO dto) {
         User target = userRepository.findById(dto.getTarget_id()).orElseThrow(() -> new UserNotFoundException("Target with id " + dto.getTarget_id() + " not found!"));
-        User author = userRepository.findById(dto.getTarget_id()).orElseThrow(() -> new UserNotFoundException("Author with id " + dto.getTarget_id() + " not found!"));
+        User author = userRepository.findById(dto.getAuthor_id()).orElseThrow(() -> new UserNotFoundException("Author with id " + dto.getTarget_id() + " not found!"));
 
         Feedback feedback = new Feedback();
         feedback.setAuthor(author);
@@ -66,6 +66,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 
         feedback.setRate(dto.getRate());
         feedback.setComment(dto.getComment());
+        feedback.setModeration(dto.getModeration());
         return FeedbackMapper.convertToDefaultDto(feedbackRepository.save(feedback));
     }
 

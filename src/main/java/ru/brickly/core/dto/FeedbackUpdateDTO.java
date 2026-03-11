@@ -6,4 +6,5 @@ import lombok.Data;
 public class FeedbackUpdateDTO {
     private int rate;
     private String comment;
+    private String moderation;
 }

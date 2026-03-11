@@ -9,4 +9,5 @@ public class FeedbackDefaultDTO {
     private UserShortDTO author;
     private int rate;
     private String comment;
+    private String moderation;
 }
