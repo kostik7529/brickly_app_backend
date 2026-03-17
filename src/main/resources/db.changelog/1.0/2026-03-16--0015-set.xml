@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2026-03-16--0015-set" author="arseniy">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="set"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="set">
+            <column name="set_num" type="VARCHAR(20)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="year" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="theme_id" type="INTEGER">
+                <constraints referencedTableName="theme" referencedColumnNames="id" foreignKeyName="fk_set_theme" nullable="false"/>
+            </column>
+
+            <column name="num_parts" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="img_url" type="VARCHAR(500)"/>
+
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>
