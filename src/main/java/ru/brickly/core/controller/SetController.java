@@ -42,15 +42,15 @@ public class SetController {
         return ResponseEntity.ok(setService.getSetsByNameContainingPaginated(name, pageable));
     }
 
-    @GetMapping("/by_year_between/") //todo поменять endyear/startyear (как в 39)
-    public ResponseEntity<Page<SetDefaultDTO>> getSetsByYearBetweenPaginated(@RequestParam Integer startYear, @RequestParam Integer endYear, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    @GetMapping("/by_year_between/{startYear}/{endYear}")
+    public ResponseEntity<Page<SetDefaultDTO>> getSetsByYearBetweenPaginated(@PathVariable Integer startYear, @PathVariable Integer endYear, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(setService.getSetsByYearBetweenPaginated(startYear, endYear, pageable));
     }
 
-    @GetMapping("/by_id/{setNum}")
-    public ResponseEntity<SetDefaultDTO> getSetById(@PathVariable String setNum) {
-        return ResponseEntity.ok(setService.getSetById(setNum));
+    @GetMapping("/by_id/{id}")
+    public ResponseEntity<SetDefaultDTO> getSetById(@PathVariable String id) {
+        return ResponseEntity.ok(setService.getSetById(id));
     }
 
     @PostMapping("/create")
@@ -58,12 +58,12 @@ public class SetController {
         return ResponseEntity.status(HttpStatus.CREATED).body(setService.createSet(dto));
     }
 
-    @PutMapping("/update/{setNum}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<SetDefaultDTO> updateSet(@PathVariable String id, @RequestBody SetUpdateDTO dto) {
         return ResponseEntity.ok(setService.updateSet(id, dto));
     }
 
-    @DeleteMapping("/delete/{setNum}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteSetById(@PathVariable String id) {
         setService.deleteSetById(id);
         return ResponseEntity.noContent().build();

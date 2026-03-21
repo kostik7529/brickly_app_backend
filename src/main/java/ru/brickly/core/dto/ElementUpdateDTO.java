@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class ElementUpdateDTO {
     private String partId;
-    private int colorId;
+    private Integer colorId;
     private Integer designId;
 }

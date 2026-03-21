@@ -45,5 +45,5 @@ public class User implements UserDetails {
     private List<Feedback> targetedFeedbacks;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Ticket> tickets;
+    private List<Ticket> tickets;
 }

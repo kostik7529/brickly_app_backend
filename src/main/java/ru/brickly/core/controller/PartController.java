@@ -36,26 +36,26 @@ public class PartController {
         return ResponseEntity.ok(partService.getPartById(id));
     }
 
-    @GetMapping("/with_id_containing/{idContaining}")
-    public ResponseEntity<List<PartDefaultDTO>> getAllPartsWithIdContaining(@PathVariable String idContaining) {
-        return ResponseEntity.ok(partService.getAllPartsWithIdContaining(idContaining));
+    @GetMapping("/by_id_containing/{idContaining}")
+    public ResponseEntity<List<PartDefaultDTO>> getAllPartsByIdContaining(@PathVariable String idContaining) {
+        return ResponseEntity.ok(partService.getAllPartsByIdContaining(idContaining));
     }
 
-    @GetMapping("/with_id_containing/{idContaining}/paginated")
-    public ResponseEntity<Page<PartDefaultDTO>> getPartsWithIdContainingPaginated(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @PathVariable String idContaining) {
+    @GetMapping("/by_id_containing/{idContaining}/paginated")
+    public ResponseEntity<Page<PartDefaultDTO>> getPartsByIdContainingPaginated(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @PathVariable String idContaining) {
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(partService.getPartsWithIdContainingPaginated(pageable, idContaining));
+        return ResponseEntity.ok(partService.getPartsByIdContainingPaginated(pageable, idContaining));
     }
 
-    @GetMapping("/with_name_containing/{nameContaining}")
-    public ResponseEntity<List<PartDefaultDTO>> getAllPartsWithNameContaining(@PathVariable String nameContaining) {
-        return ResponseEntity.ok(partService.getAllPartsWithNameContaining(nameContaining));
+    @GetMapping("/by_name_containing/{nameContaining}")
+    public ResponseEntity<List<PartDefaultDTO>> getAllPartsByNameContaining(@PathVariable String nameContaining) {
+        return ResponseEntity.ok(partService.getAllPartsByNameContaining(nameContaining));
     }
 
-    @GetMapping("/with_name_containing/{nameContaining}/paginated")
-    public ResponseEntity<Page<PartDefaultDTO>> getPartsWithNameContainingPaginated(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @PathVariable String nameContaining) {
+    @GetMapping("/by_name_containing/{nameContaining}/paginated")
+    public ResponseEntity<Page<PartDefaultDTO>> getPartsByNameContainingPaginated(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @PathVariable String nameContaining) {
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(partService.getPartsWithNameContainingPaginated(pageable, nameContaining));
+        return ResponseEntity.ok(partService.getPartsByNameContainingPaginated(pageable, nameContaining));
     }
 
     @PostMapping("/create")

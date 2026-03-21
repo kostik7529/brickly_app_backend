@@ -10,6 +10,9 @@
         </preConditions>
 
         <createTable tableName="part_relationship">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
 
             <column name="rel_type" type="VARCHAR(1)">
                 <constraints nullable="false"/>
@@ -24,7 +27,5 @@
             </column>
 
         </createTable>
-
-
     </changeSet>
 </databaseChangeLog>

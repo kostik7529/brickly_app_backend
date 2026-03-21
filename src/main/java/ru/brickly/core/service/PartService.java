@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable;
 import ru.brickly.core.dto.PartCreateDTO;
 import ru.brickly.core.dto.PartDefaultDTO;
 import ru.brickly.core.dto.PartUpdateDTO;
-import ru.brickly.core.entity.Part;
 
 import java.util.List;
 
@@ -16,13 +15,13 @@ public interface PartService {
 
     Page<PartDefaultDTO> getPartsPaginated(Pageable pageable);
 
-    List<PartDefaultDTO> getAllPartsWithIdContaining(String idContaining);
+    List<PartDefaultDTO> getAllPartsByIdContaining(String idContaining);
 
-    Page<PartDefaultDTO> getPartsWithIdContainingPaginated(Pageable pageable, String idContaining);
+    Page<PartDefaultDTO> getPartsByIdContainingPaginated(Pageable pageable, String idContaining);
 
-    List<PartDefaultDTO> getAllPartsWithNameContaining(String nameContaining);
+    List<PartDefaultDTO> getAllPartsByNameContaining(String nameContaining);
 
-    Page<PartDefaultDTO> getPartsWithNameContainingPaginated(Pageable pageable, String nameContaining);
+    Page<PartDefaultDTO> getPartsByNameContainingPaginated(Pageable pageable, String nameContaining);
 
     PartDefaultDTO createPart(PartCreateDTO dto);
 

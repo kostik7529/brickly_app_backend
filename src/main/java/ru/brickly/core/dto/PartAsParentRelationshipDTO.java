@@ -1,12 +1,11 @@
 package ru.brickly.core.dto;
 
 import lombok.Data;
-import ru.brickly.core.entity.Part;
 
 @Data
-public class PartRelationshipDefaultDTO {
+public class PartAsParentRelationshipDTO {
     private long id;
     private String type;
+    private String parentPartId;
     private PartDefaultDTO childPart;
-    private PartDefaultDTO parentPart;
 }

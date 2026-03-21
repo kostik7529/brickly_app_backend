@@ -9,7 +9,6 @@ import ru.brickly.core.entity.Theme;
 
 @Repository
 public interface ThemeRepository extends JpaRepository<Theme,Integer> {
-
     @Override
     @EntityGraph(attributePaths = {"parent"})
     Page<Theme> findAll(Pageable pageable);
@@ -18,7 +17,7 @@ public interface ThemeRepository extends JpaRepository<Theme,Integer> {
     Page<Theme> findByNameContainingIgnoreCase(String name, Pageable pageable);
 
     @EntityGraph(attributePaths = {"parent"})
-    Page<Theme>findByParentIsNull(Pageable pageable); //todo пересмотреть
+    Page<Theme>findByParentIsNull(Pageable pageable);
 
     @EntityGraph(attributePaths = {"parent"})
     Page<Theme>findByParentId(Integer parentId, Pageable pageable);

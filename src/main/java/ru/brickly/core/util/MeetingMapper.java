@@ -11,6 +11,8 @@ public class MeetingMapper {
         MeetingDefaultDTO meetingDefaultDTO = new MeetingDefaultDTO();
         meetingDefaultDTO.setId(meeting.getId());
         meetingDefaultDTO.setDate(meeting.getDate());
+        meetingDefaultDTO.setAnnounceDate(meeting.getAnnounceDate());
+        meetingDefaultDTO.setDuration(meeting.getDuration());
         meetingDefaultDTO.setType(MeetingTypeMapper.convertToDefaultDto(meeting.getType()));
         meetingDefaultDTO.setAddress(meeting.getAddress());
         meetingDefaultDTO.setDescription(meeting.getDescription());
@@ -26,6 +28,7 @@ public class MeetingMapper {
         meetingShortDTO.setId(meeting.getId());
         meetingShortDTO.setAddress(meeting.getAddress());
         meetingShortDTO.setDate(meeting.getDate());
+        meetingShortDTO.setDuration(meeting.getDuration());
         meetingShortDTO.setDescription(meeting.getDescription());
         meetingShortDTO.setType(MeetingTypeMapper.convertToDefaultDto(meeting.getType()));
         return meetingShortDTO;

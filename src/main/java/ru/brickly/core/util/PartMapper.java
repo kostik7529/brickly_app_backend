@@ -1,7 +1,6 @@
 package ru.brickly.core.util;
 
 import lombok.experimental.UtilityClass;
-import ru.brickly.core.dto.PartCategoryDefaultDTO;
 import ru.brickly.core.dto.PartDefaultDTO;
 import ru.brickly.core.entity.Part;
 
@@ -12,6 +11,7 @@ public class PartMapper {
         partDefaultDTO.setName(part.getName());
         partDefaultDTO.setId(part.getId());
         partDefaultDTO.setCategory(PartCategoryMapper.convertToShortDto(part.getCategory()));
+        partDefaultDTO.setImgUrl(part.getImageUrl());
         return partDefaultDTO;
     }
 

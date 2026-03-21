@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class FeedbackUpdateDTO {
-    private int rate;
+    private Integer rate;
     private String comment;
     private String moderation;
 }

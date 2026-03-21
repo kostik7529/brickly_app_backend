@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class MeetingShortDTO {
     private long id;
     private LocalDateTime date;
+    private Integer duration;
     private String address;
     private String description;
     private MeetingTypeDefaultDTO type;

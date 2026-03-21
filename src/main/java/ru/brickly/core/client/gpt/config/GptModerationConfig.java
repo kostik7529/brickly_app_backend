@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 public class GptModerationConfig {
     private String key;
     private String url = "https://api.openai.com/v1/chat/completions";
-    private Integer timeout = 10000;
+    private Integer timeout = 20000;
     private String model = "gpt-5-nano";
 }

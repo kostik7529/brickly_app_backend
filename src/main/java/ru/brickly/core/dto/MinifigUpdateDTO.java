@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class MinifigUpdateDTO {
     private String name;
-    private int numParts;
+    private Integer numParts;
     private String imageUrl;
 }

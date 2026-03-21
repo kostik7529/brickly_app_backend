@@ -2,6 +2,8 @@ package ru.brickly.core.service.impl;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import ru.brickly.core.dto.FeedbackUpdateDTO;
 import ru.brickly.core.entity.Feedback;
 import ru.brickly.core.entity.User;
 import ru.brickly.core.exception.FeedbackNotFoundException;
+import ru.brickly.core.exception.SelfFeedbackException;
 import ru.brickly.core.exception.UserNotFoundException;
 import ru.brickly.core.repository.FeedbackRepository;
 import ru.brickly.core.repository.UserRepository;
@@ -18,14 +21,15 @@ import ru.brickly.core.service.FeedbackService;
 import ru.brickly.core.util.FeedbackMapper;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class FeedbackServiceImpl implements FeedbackService {
     private final FeedbackRepository feedbackRepository;
     private final UserRepository userRepository;
+    private final RabbitTemplate rabbitTemplate;
 
     @Override
     public List<FeedbackDefaultDTO> getAllTargetFeedbacks(Long target_id) {
@@ -53,20 +57,38 @@ public class FeedbackServiceImpl implements FeedbackService {
         User author = userRepository.findById(dto.getAuthor_id()).orElseThrow(() -> new UserNotFoundException("Author with id " + dto.getTarget_id() + " not found!"));
 
         Feedback feedback = new Feedback();
+        if (author.getId() == target.getId()) {
+            throw new SelfFeedbackException("Self feedbacks are not allowed!");
+        }
         feedback.setAuthor(author);
         feedback.setTarget(target);
         feedback.setComment(dto.getComment());
         feedback.setRate(dto.getRate());
-        return FeedbackMapper.convertToDefaultDto(feedbackRepository.save(feedback));
+        Feedback result = feedbackRepository.save(feedback);
+
+        log.info("(C) Sending to rabbit: feedbackId={}", result.getId());
+        rabbitTemplate.convertAndSend("moderation.queue", result.getId());
+
+        return FeedbackMapper.convertToDefaultDto(result);
     }
 
     @Override
     public FeedbackDefaultDTO updateFeedback(Long id, FeedbackUpdateDTO dto) {
         Feedback feedback = feedbackRepository.findById(id).orElseThrow(() -> new FeedbackNotFoundException("Feedback with id " + id + " not found!"));
 
-        feedback.setRate(dto.getRate());
-        feedback.setComment(dto.getComment());
-        feedback.setModeration(dto.getModeration());
+        if (dto.getRate() != null) {
+            feedback.setRate(dto.getRate());
+        }
+
+        if (dto.getComment() != null) {
+            feedback.setComment(dto.getComment());
+            feedback.setModeration("PROCESSING");
+            log.info("(U) Sending to rabbit: feedbackId={}", feedback.getId());
+            rabbitTemplate.convertAndSend("moderation.queue", feedback.getId());
+        } else if (dto.getModeration() != null) {
+            feedback.setModeration(dto.getModeration());
+        }
+
         return FeedbackMapper.convertToDefaultDto(feedbackRepository.save(feedback));
     }
 

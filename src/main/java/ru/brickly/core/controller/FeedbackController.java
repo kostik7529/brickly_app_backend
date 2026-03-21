@@ -23,14 +23,13 @@ import java.util.List;
 @Slf4j
 public class FeedbackController {
     private final FeedbackService feedbackService;
-    private final RabbitTemplate rabbitTemplate;
 
     @GetMapping("/by_target_id/{targetId}")
     public ResponseEntity<List<FeedbackDefaultDTO>> getAllTargetFeedbacks(@PathVariable Long targetId) {
         return ResponseEntity.ok(feedbackService.getAllTargetFeedbacks(targetId));
     }
 
-    @GetMapping("/by_target_id/{target_id}/paginated")
+    @GetMapping("/by_target_id/{targetId}/paginated")
     public ResponseEntity<Page<FeedbackDefaultDTO>> getAllTargetFeedbacksPaginated(@PathVariable Long targetId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(feedbackService.getAllTargetFeedbacksPaginated(targetId, pageable));
@@ -49,10 +48,7 @@ public class FeedbackController {
 
     @PostMapping("/create")
     public ResponseEntity<FeedbackDefaultDTO> createFeedback(@RequestBody FeedbackCreateDTO dto) {
-        FeedbackDefaultDTO result = feedbackService.createFeedback(dto);
-        log.info("Sending to rabbit: feedbackId={}", result.getId());
-        rabbitTemplate.convertAndSend("moderation.queue", result.getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        return ResponseEntity.status(HttpStatus.CREATED).body(feedbackService.createFeedback(dto));
     }
 
     @PutMapping("/update/{id}")

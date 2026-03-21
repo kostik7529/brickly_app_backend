@@ -68,11 +68,21 @@ public class ElementServiceImpl implements ElementService {
     @Override
     public ElementDefaultDTO updateElement(String id, ElementUpdateDTO dto) {
         Element element = elementRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Element with id " + id + " not found!"));
-        Color color = colorRepository.findById(dto.getColorId()).orElseThrow(() -> new ColorNotFoundException("Color with id " + dto.getColorId() + " not found!"));
-        Part part = partRepository.findById(dto.getPartId()).orElseThrow(() -> new PartNotFoundException("Part with id " + dto.getPartId() + " not found!"));
-        element.setPart(part);
-        element.setColor(color);
-        element.setDesignId(dto.getDesignId());
+
+        if (dto.getColorId() != null) {
+            Color color = colorRepository.findById(dto.getColorId()).orElseThrow(() -> new ColorNotFoundException("Color with id " + dto.getColorId() + " not found!"));
+            element.setColor(color);
+        }
+
+        if (dto.getPartId() != null) {
+            Part part = partRepository.findById(dto.getPartId()).orElseThrow(() -> new PartNotFoundException("Part with id " + dto.getPartId() + " not found!"));
+            element.setPart(part);
+        }
+
+        if (dto.getDesignId() != null) {
+            element.setDesignId(dto.getDesignId());
+        }
+
         return ElementMapper.convertToDefaultDto(elementRepository.save(element));
     }
 

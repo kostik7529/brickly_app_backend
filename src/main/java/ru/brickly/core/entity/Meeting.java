@@ -2,16 +2,11 @@ package ru.brickly.core.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "meeting")
 public class Meeting {
@@ -21,6 +16,12 @@ public class Meeting {
 
     @Column(name = "date")
     private LocalDateTime date;
+
+    @Column(name = "announce_date")
+    private LocalDateTime announceDate;
+
+    @Column(name = "duration")
+    private Integer duration;
 
     @Column(name = "address")
     private String address;

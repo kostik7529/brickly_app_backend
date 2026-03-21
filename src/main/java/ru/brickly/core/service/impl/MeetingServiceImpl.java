@@ -46,6 +46,8 @@ public class MeetingServiceImpl implements MeetingService {
         Meeting meeting = new Meeting();
         meeting.setAddress(dto.getAddress());
         meeting.setDate(dto.getDate());
+        meeting.setAnnounceDate(dto.getAnnounceDate());
+        meeting.setDuration(dto.getDuration());
         meeting.setDescription(dto.getDescription());
         meeting.setType(meetingType);
         meeting.setDiscountAmount(dto.getDiscountAmount());
@@ -58,15 +60,44 @@ public class MeetingServiceImpl implements MeetingService {
     @Override
     public MeetingDefaultDTO updateMeeting(Long id, MeetingUpdateDTO dto) {
         Meeting meeting = meetingRepository.findById(id).orElseThrow(() -> new MeetingNotFoundException("Meeting with id " + id + " not found!"));
-        MeetingType meetingType = meetingTypeRepository.findById(dto.getTypeId()).orElseThrow(() -> new MeetingTypeNotFoundException("Meeting type with id " + dto.getTypeId() + " not found!"));
-        meeting.setAddress(dto.getAddress());
-        meeting.setDate(dto.getDate());
-        meeting.setDescription(dto.getDescription());
-        meeting.setType(meetingType);
-        meeting.setDiscountAmount(dto.getDiscountAmount());
-        meeting.setDiscountDuration(dto.getDiscountDuration());
-        meeting.setDiscountModifier(dto.getDiscountModifier());
-        meeting.setTicketPrice(dto.getTicketPrice());
+
+        if (dto.getTypeId() != null) {
+            MeetingType meetingType = meetingTypeRepository.findById(dto.getTypeId()).orElseThrow(() -> new MeetingTypeNotFoundException("Meeting type with id " + dto.getTypeId() + " not found!"));
+            meeting.setType(meetingType);
+        }
+
+        if (dto.getAddress() != null) {
+            meeting.setAddress(dto.getAddress());
+        }
+
+        if (dto.getDate() != null) {
+            meeting.setDate(dto.getDate());
+        }
+
+        if (dto.getDescription() != null) {
+            meeting.setDescription(dto.getDescription());
+        }
+
+        if (dto.getDiscountAmount() != null) {
+            meeting.setDiscountAmount(dto.getDiscountAmount());
+        }
+
+        if (dto.getDuration() != null) {
+            meeting.setDuration(dto.getDuration());
+        }
+
+        if (dto.getDiscountDuration() != null) {
+            meeting.setDiscountDuration(dto.getDiscountDuration());
+        }
+
+        if (dto.getDiscountModifier() != null) {
+            meeting.setDiscountModifier(dto.getDiscountModifier());
+        }
+
+        if (dto.getTicketPrice() != null) {
+            meeting.setTicketPrice(dto.getTicketPrice());
+        }
+
         return MeetingMapper.convertToDefaultDto(meetingRepository.save(meeting));
     }
 

@@ -6,5 +6,6 @@ import lombok.Data;
 public class PartUpdateDTO {
     private String id;
     private String name;
-    private int categoryId;
+    private Integer categoryId;
+    private String imgUrl;
 }

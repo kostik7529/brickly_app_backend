@@ -23,9 +23,20 @@
             </column>
 
             <column name="part_material" type="VARCHAR(100)"/>
-
         </createTable>
-
-
     </changeSet>
+
+
+    <changeSet id="2026-03-21--0009-part-category" author="kbadogin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists columnName="img_url" tableName="part"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="part">
+            <column name="img_url" type="VARCHAR(200)"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

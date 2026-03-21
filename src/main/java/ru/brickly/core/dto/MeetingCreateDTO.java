@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 @Data
 public class MeetingCreateDTO {
     private LocalDateTime date;
+    private LocalDateTime announceDate;
+    private Integer duration;
     private String address;
     private int typeId;
     private int ticketPrice;

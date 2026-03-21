@@ -8,8 +8,9 @@ import java.time.LocalDateTime;
 public class MeetingUpdateDTO {
     private LocalDateTime date;
     private String address;
-    private int typeId;
-    private int ticketPrice;
+    private Integer duration;
+    private Integer typeId;
+    private Integer ticketPrice;
     private String description;
     private Integer discountDuration;
     private Integer discountAmount;

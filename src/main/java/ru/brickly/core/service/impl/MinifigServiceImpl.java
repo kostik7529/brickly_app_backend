@@ -53,9 +53,19 @@ public class MinifigServiceImpl implements MinifigService {
     @Override
     public MinifigDefaultDTO updateMinifig(String id, MinifigUpdateDTO dto) {
         Minifig minifig = minifigRepository.findById(id).orElseThrow(() -> new MinifigNotFoundException("Minifig with id " + id + " not found!"));
-        minifig.setName(dto.getName());
-        minifig.setImageUrl(dto.getImageUrl());
-        minifig.setNumParts(dto.getNumParts());
+
+        if (dto.getName() != null) {
+            minifig.setName(dto.getName());
+        }
+
+        if (dto.getImageUrl() != null) {
+            minifig.setImageUrl(dto.getImageUrl());
+        }
+
+        if (dto.getNumParts() != null) {
+            minifig.setNumParts(dto.getNumParts());
+        }
+
         return MinifigMapper.convertToDefaultDTO(minifigRepository.save(minifig));
     }
 

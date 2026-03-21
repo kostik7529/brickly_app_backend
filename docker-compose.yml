@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: bricklyuser
       POSTGRES_PASSWORD: bricklypass
     ports:
-      - "5433:5432"  # 5433 чтобы не ебаться с локальным постгресом
+      - "5433:5432"
     volumes:
       - brickly_postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -15,6 +15,12 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
   app:
     build: .

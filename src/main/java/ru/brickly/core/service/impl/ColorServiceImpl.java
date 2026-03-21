@@ -57,13 +57,34 @@ public class ColorServiceImpl implements ColorService {
     @Override
     public ColorDefaultDTO updateColor(Integer id, ColorUpdateDTO dto) {
         Color color = colorRepository.findById(id).orElseThrow(() -> new ColorNotFoundException("Color with id " + id + " not found!"));
-        color.setName(dto.getName());
-        color.setRgb(dto.getRgb());
-        color.setTransparent(dto.isTransparent());
-        color.setNumParts(dto.getNumParts());
-        color.setNumSets(dto.getNumSets());
-        color.setYearSince(dto.getYearSince());
-        color.setYearTill(dto.getYearTill());
+        if (dto.getName() != null) {
+            color.setName(dto.getName());
+        }
+
+        if (dto.getRgb() != null) {
+            color.setRgb(dto.getRgb());
+        }
+
+        if (dto.getIsTransparent() != null) {
+            color.setTransparent(dto.getIsTransparent());
+        }
+
+        if (dto.getNumParts() != null) {
+            color.setNumParts(dto.getNumParts());
+        }
+
+        if (dto.getNumSets() != null) {
+            color.setNumSets(dto.getNumSets());
+        }
+
+        if (dto.getYearSince() != null) {
+            color.setYearSince(dto.getYearSince());
+        }
+
+        if (dto.getYearTill() != null) {
+            color.setYearTill(dto.getYearTill());
+        }
+
         return ColorMapper.convertToDefaultDto(colorRepository.save(color));
     }
 

@@ -6,7 +6,7 @@ import lombok.Data;
 public class ColorUpdateDTO {
     private String name;
     private String rgb;
-    private boolean isTransparent;
+    private Boolean isTransparent;
     private Integer numParts;
     private Integer numSets;
     private Integer yearSince;

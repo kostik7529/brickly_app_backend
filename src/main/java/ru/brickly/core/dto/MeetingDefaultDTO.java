@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 public class MeetingDefaultDTO {
     private long id;
     private LocalDateTime date;
+    private LocalDateTime announceDate;
+    private Integer duration;
     private String address;
     private MeetingTypeDefaultDTO type;
     private int ticketPrice;

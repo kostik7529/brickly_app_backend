@@ -43,22 +43,22 @@ public class PartServiceImpl implements PartService {
     }
 
     @Override
-    public List<PartDefaultDTO> getAllPartsWithIdContaining(String idContaining) {
+    public List<PartDefaultDTO> getAllPartsByIdContaining(String idContaining) {
         return partRepository.findByIdContaining(idContaining).stream().map(PartMapper::convertToDefaultDto).collect(Collectors.toList());
     }
 
     @Override
-    public Page<PartDefaultDTO> getPartsWithIdContainingPaginated(Pageable pageable, String idContaining) {
+    public Page<PartDefaultDTO> getPartsByIdContainingPaginated(Pageable pageable, String idContaining) {
         return partRepository.findByIdContaining(idContaining, pageable).map(PartMapper::convertToDefaultDto);
     }
 
     @Override
-    public List<PartDefaultDTO> getAllPartsWithNameContaining(String nameContaining) {
+    public List<PartDefaultDTO> getAllPartsByNameContaining(String nameContaining) {
         return partRepository.findByNameContaining(nameContaining).stream().map(PartMapper::convertToDefaultDto).collect(Collectors.toList());
     }
 
     @Override
-    public Page<PartDefaultDTO> getPartsWithNameContainingPaginated(Pageable pageable, String nameContaining) {
+    public Page<PartDefaultDTO> getPartsByNameContainingPaginated(Pageable pageable, String nameContaining) {
         return partRepository.findByNameContaining(nameContaining, pageable).map(PartMapper::convertToDefaultDto);
     }
 
@@ -73,16 +73,23 @@ public class PartServiceImpl implements PartService {
         part.setId(dto.getId());
         part.setCategory(partCategory);
         part.setName(dto.getName());
+        part.setImageUrl(dto.getImgUrl());
         return PartMapper.convertToDefaultDto(partRepository.save(part));
     }
 
     @Override
     public PartDefaultDTO updatePart(String id, PartUpdateDTO dto) {
         Part part = partRepository.findById(id).orElseThrow(() -> new PartNotFoundException("Part with id " + id + " not found!"));
-        PartCategory partCategory = partCategoryRepository.findById(dto.getCategoryId()).orElseThrow(() -> new PartCategoryNotFoundException("Part category with id " + dto.getCategoryId() + " not found!"));
-        part.setId(dto.getId());
-        part.setCategory(partCategory);
-        part.setName(dto.getName());
+
+        if (dto.getCategoryId() != null) {
+            PartCategory partCategory = partCategoryRepository.findById(dto.getCategoryId()).orElseThrow(() -> new PartCategoryNotFoundException("Part category with id " + dto.getCategoryId() + " not found!"));
+            part.setCategory(partCategory);
+        }
+
+        if (dto.getName() != null) {
+            part.setName(dto.getName());
+        }
+
         return PartMapper.convertToDefaultDto(partRepository.save(part));
     }
 

@@ -27,19 +27,19 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public Page<ThemeDefaultDTO> getRootThemesPaginate(Pageable pageable) {
-        return null;
+    public Page<ThemeDefaultDTO> getRootThemesPaginated(Pageable pageable) {
+        return themeRepository.findByParentIsNull(pageable).map(ThemeMapper::convertToDefaultDto);
     }
 
     @Override
     public Page<ThemeDefaultDTO> getChildThemesByParentIdPaginated(Integer parentId, Pageable pageable) {
-        themeRepository.findById(parentId).orElseThrow(() -> new ThemeNotFoundException("Parent theme with id" + parentId + "not found!"));
+        themeRepository.findById(parentId).orElseThrow(() -> new ThemeNotFoundException("Parent theme with id " + parentId + " not found!"));
         return themeRepository.findByParentId(parentId, pageable).map(ThemeMapper::convertToDefaultDto);
     }
 
     @Override
     public ThemeDefaultDTO getThemeById(Integer id) {
-        return ThemeMapper.convertToDefaultDto(themeRepository.findById(id).orElseThrow(() -> new ThemeNotFoundException("Theme with id" + id + "not found!")));
+        return ThemeMapper.convertToDefaultDto(themeRepository.findById(id).orElseThrow(() -> new ThemeNotFoundException("Theme with id " + id + " not found!")));
     }
 
     @Override
@@ -52,45 +52,51 @@ public class ThemeServiceImpl implements ThemeService {
             }
             theme.setId(dto.getId());
         }
+
         theme.setName(dto.getName());
         if (dto.getParentId() != null) {
             Theme parent = themeRepository.findById(dto.getParentId()).orElseThrow(() -> new ThemeNotFoundException("Parent theme with id " + dto.getParentId() + " not found!"));
             theme.setParent(parent);
         }
+
         return ThemeMapper.convertToDefaultDto(themeRepository.save(theme));
     }
 
     @Override
     public ThemeDefaultDTO updateTheme(Integer id, ThemeUpdateDTO dto) {
-        Theme theme = themeRepository.findById(id).orElseThrow(() -> new ThemeNotFoundException("Theme with id" + id + "not found"));
-        theme.setName(dto.getName());
+        Theme theme = themeRepository.findById(id).orElseThrow(() -> new ThemeNotFoundException("Theme with id " + id + " not found"));
+
+        if (dto.getName() != null) {
+            theme.setName(dto.getName());
+        }
+
         if (dto.getParentId() != null) {
             if (dto.getParentId().equals(id)) {
-                throw new IllegalArgumentException("Theme cannot be parent of itself");
+                throw new IllegalArgumentException("Theme cannot be parent of itself!");
             }
-            Theme parent = themeRepository.findById(dto.getParentId()).orElseThrow(() -> new ThemeNotFoundException("Parent theme with id " + dto.getParentId() + "not found"));
+            Theme parent = themeRepository.findById(dto.getParentId()).orElseThrow(() -> new ThemeNotFoundException("Parent theme with id  " + dto.getParentId() + " not found!"));
             theme.setParent(parent);
         } else {
             theme.setParent(null);
         }
+
         return ThemeMapper.convertToDefaultDto((themeRepository.save(theme)));
     }
 
     @Override
     public void deleteThemeById(Integer id) {
-        themeRepository.findById(id).orElseThrow(() -> new ThemeNotFoundException("Theme with id" + id + "not found!"));
+        themeRepository.findById(id).orElseThrow(() -> new ThemeNotFoundException("Theme with id " + id + " not found!"));
         Page<Theme> childThemes = themeRepository.findByParentId(id, Pageable.unpaged());
         if (childThemes.hasContent()) {
-            throw new IllegalArgumentException("Cannot delete theme with id" + id + "because it has child themes!");
+            throw new IllegalArgumentException("Cannot delete theme with id"  + id + " because it has child themes!");
         }
         themeRepository.deleteById(id);
     }
 
     @Override
     public Page<ThemeDefaultDTO> getThemesByNameContainingPaginated(Pageable pageable, String name) {
-        return null;
+        return themeRepository.findByNameContainingIgnoreCase(name, pageable).map(ThemeMapper::convertToDefaultDto);
     }
-
 }
 
 

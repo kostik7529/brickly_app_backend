@@ -41,7 +41,27 @@
             <column name="discount_modifier" type="INTEGER"/>
 
         </createTable>
+    </changeSet>
 
+    <changeSet id="2026-03-21--0007-meeting" author="kbadogin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists columnName="announce_date" tableName="meeting"/>
+            </not>
+            <not>
+                <columnExists columnName="duration" tableName="meeting"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="meeting">
+            <column name="announce_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <addColumn tableName="meeting">
+            <column name="duration" type="INTEGER"/>
+        </addColumn>
 
     </changeSet>
 </databaseChangeLog>

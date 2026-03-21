@@ -9,7 +9,7 @@ import ru.brickly.core.dto.ThemeUpdateDTO;
 public interface ThemeService {
     Page<ThemeDefaultDTO> getThemesPaginated(Pageable pageable);
 
-    Page<ThemeDefaultDTO> getRootThemesPaginate(Pageable pageable);
+    Page<ThemeDefaultDTO> getRootThemesPaginated(Pageable pageable);
 
     Page<ThemeDefaultDTO> getChildThemesByParentIdPaginated(Integer parentId, Pageable pageable);
 
@@ -22,5 +22,4 @@ public interface ThemeService {
     void deleteThemeById(Integer id);
 
     Page<ThemeDefaultDTO> getThemesByNameContainingPaginated(Pageable pageable, String name);
-
 }

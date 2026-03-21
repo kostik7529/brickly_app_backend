@@ -23,6 +23,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(SelfFeedbackException.class)
+    public ResponseEntity<String> handleSelfFeedbackException(SelfFeedbackException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(MeetingNotFoundException.class)
     public ResponseEntity<String> handleMeetingNotFoundException(MeetingNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -85,6 +90,33 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MinifigIdAlreadyExistsException.class)
     public ResponseEntity<String> handleMinifigIdAlreadyExistsException(MinifigIdAlreadyExistsException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(PartRelationshipNotFoundException.class)
+    public ResponseEntity<String> handlePartRelationshipNotFoundException(PartRelationshipNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ThemeNotFoundException.class)
+    public ResponseEntity<String> handleThemeNotFoundException(ThemeNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ThemeIdAlreadyExistsException.class)
+    public ResponseEntity<String> handleThemeIdAlreadyExistsException(ThemeIdAlreadyExistsException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(SetNotFoundException.class)
+    public ResponseEntity<String> handleSetNotFoundException(SetNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(SetIdAlreadyExistsException.class)
+    public ResponseEntity<String> handleSetIdAlreadyExistsException(SetIdAlreadyExistsException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+    }
+
+
 }

@@ -23,10 +23,21 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="img_url" type="VARCHAR(100)"/>
-
+            <column name="img_url" type="VARCHAR(200)"/>
         </createTable>
+    </changeSet>
 
+    <changeSet id="2026-03-12--0013-minifig" author="kbadogin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists columnName="bricklink_id" tableName="minifig"/>
+            </not>
+        </preConditions>
 
+        <addColumn tableName="minifig">
+            <column name="bricklink_id" type="VARCHAR(20)">
+                <constraints unique="true"/>
+            </column>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

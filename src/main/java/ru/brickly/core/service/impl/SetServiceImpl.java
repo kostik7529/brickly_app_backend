@@ -53,8 +53,8 @@ public class SetServiceImpl implements SetService {
     }
 
     @Override
-    public SetDefaultDTO getSetById(String setNum) {
-        return SetMapper.convertToDefaultDto(setRepository.findById(setNum).orElseThrow(() -> new SetNotFoundException("Set with number " + setNum + " not found!"))
+    public SetDefaultDTO getSetById(String id) {
+        return SetMapper.convertToDefaultDto(setRepository.findById(id).orElseThrow(() -> new SetNotFoundException("Set with number " + id + " not found!"))
         );
     }
 
@@ -75,9 +75,19 @@ public class SetServiceImpl implements SetService {
     @Override
     public SetDefaultDTO updateSet(String id, SetUpdateDTO dto) {
         Set set = setRepository.findById(id).orElseThrow(() -> new SetNotFoundException("Set with number " + id + " not found!"));
-        set.setName(dto.getName());
-        set.setYear(dto.getYear());
-        set.setNumParts(dto.getNumParts());
+
+        if (dto.getName() != null) {
+            set.setName(dto.getName());
+        }
+
+        if (dto.getYear() != null) {
+            set.setYear(dto.getYear());
+        }
+
+        if (dto.getNumParts() != null) {
+            set.setNumParts(dto.getNumParts());
+        }
+
         return SetMapper.convertToDefaultDto(setRepository.save(set));
     }
 

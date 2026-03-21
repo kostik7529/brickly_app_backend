@@ -74,20 +74,36 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByUsername(dto.getUsername()).isPresent()
                 && Objects.equals(userRepository.findByUsername(dto.getUsername()).get().getUsername(),
                 userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found!")).getUsername())) {
-            throw new UserAlreadyExistsException("User with username " + dto.getUsername() +  "already exists!");
+            throw new UserAlreadyExistsException("User with username " + dto.getUsername() +  " already exists!");
         }
 
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found!"));
-        user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
-        user.setEmail(dto.getEmail());
-        user.setName(dto.getName());
-        user.setCity(dto.getCity());
+
+        if (dto.getUsername() != null) {
+            user.setUsername(dto.getUsername());
+        }
+
+        if (dto.getPassword() != null) {
+            user.setPassword(dto.getPassword());
+        }
+
+        if (dto.getEmail() != null) {
+            user.setEmail(dto.getEmail());
+        }
+
+        if (dto.getName() != null) {
+            user.setName(dto.getName());
+        }
+
+        if (dto.getCity() != null) {
+            user.setCity(dto.getCity());
+        }
+
         return UserMapper.convertToFullDto(userRepository.save(user));
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUserById(Long id) {
         userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found!"));
         userRepository.deleteById(id);
     }
