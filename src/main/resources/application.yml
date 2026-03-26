@@ -106,8 +106,9 @@ spring:
 # === GPT Configuration ===
 gpt:
   api:
-    key: ${GPT_API_KEY}
-    url: https://api.openai.com/v1/chat/completions
+    key: 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
+#    url: https://api.openai.com/v1/chat/completions
+    url: http://104.128.139.152:8888/v1/chat/completions
     timeout: 10000
     model: gpt-5-nano
     temperature: 0.3

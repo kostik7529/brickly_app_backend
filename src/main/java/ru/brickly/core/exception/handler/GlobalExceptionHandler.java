@@ -118,5 +118,20 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(InventoryNotFoundException.class)
+    public ResponseEntity<String> handleInventoryNotFoundException(InventoryNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InventoryIdAlreadyExistsException.class)
+    public ResponseEntity<String> handleInventoryIdAlreadyExistsException(InventoryIdAlreadyExistsException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InventoryUpdateException.class)
+    public ResponseEntity<String> handleInventoryUpdateException(InventoryUpdateException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
 
 }

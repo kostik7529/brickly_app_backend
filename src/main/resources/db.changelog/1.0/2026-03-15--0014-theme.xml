@@ -14,26 +14,24 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
-            <column name="name" type="VARCHAR(40)">
+            <column name="name" type="VARCHAR(90)">
                 <constraints nullable="false"/>
             </column>
 
             <column name="parent_id" type="INTEGER">
-                <constraints referencedTableName="theme" referencedColumnNames="id" foreignKeyName="fk_theme_parent" nullable="true"/>
+                <constraints nullable="true"/>
             </column>
         </createTable>
 
-        <createIndex indexName="idx_theme_parent_id" tableName="theme">
-            <column name="parent_id"/>
-        </createIndex>
-
-        <createIndex indexName="idx_theme_name" tableName="theme">
-            <column name="name"/>
-        </createIndex>
+        <addForeignKeyConstraint
+                constraintName="fk_theme_parent"
+                baseTableName="theme"
+                baseColumnNames="parent_id"
+                referencedTableName="theme"
+                referencedColumnNames="id"
+                deferrable="true"
+                initiallyDeferred="true"/>
 
     </changeSet>
 </databaseChangeLog>
-
-
-<!--todo спросить на занятии по поводу name/parent_id-->
 

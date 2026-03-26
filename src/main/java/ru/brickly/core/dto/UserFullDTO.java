@@ -2,7 +2,7 @@ package ru.brickly.core.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 public class UserFullDTO {
@@ -10,7 +10,7 @@ public class UserFullDTO {
     private String username;
     private String name;
     private String password;
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
     private String email;
     private String city;
 }

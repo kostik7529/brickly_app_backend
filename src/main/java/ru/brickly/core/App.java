@@ -9,5 +9,4 @@ public class App {
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
     }
-//    TODO: оптимизация запросов через проецирование, обновление аннотаций @Data, чтение в конфиг из .yml файла
 }

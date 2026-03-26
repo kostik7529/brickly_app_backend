@@ -61,10 +61,15 @@ public class SetServiceImpl implements SetService {
     @Override
     public SetDefaultDTO createSet(SetCreateDTO dto) {
         Optional<Set> setExistenceCheck = setRepository.findById(dto.getId());
+
         if (setExistenceCheck.isPresent()){
             throw new SetIdAlreadyExistsException("Set with number " + dto.getId() + " already exists!");
         }
+
+        Theme theme = themeRepository.findById(dto.getThemeId()).orElseThrow(() -> new ThemeNotFoundException("Theme with id " + dto.getThemeId() + " not found!"));
+
         Set set = new Set();
+        set.setTheme(theme);
         set.setId(dto.getId());
         set.setName(dto.getName());
         set.setYear(dto.getYear());

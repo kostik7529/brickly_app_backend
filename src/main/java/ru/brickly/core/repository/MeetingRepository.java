@@ -16,5 +16,5 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long> {
 
     @Override
     @EntityGraph(attributePaths = {"type"})
-    Optional<Meeting> findById(Long aLong);
+    Optional<Meeting> findById(Long id);
 }
