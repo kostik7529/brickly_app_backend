@@ -6,6 +6,8 @@ import ru.brickly.core.dto.UserFullDTO;
 import ru.brickly.core.dto.UserShortDTO;
 import ru.brickly.core.entity.User;
 
+import java.util.stream.Collectors;
+
 @UtilityClass
 public class UserMapper {
     public UserDefaultDTO convertToDefaultDto(User user) {
@@ -15,6 +17,8 @@ public class UserMapper {
         userDTO.setEmail(user.getEmail());
         userDTO.setUsername(user.getUsername());
         userDTO.setCreatedAt(user.getCreatedAt());
+        userDTO.setCity(user.getCity());
+        userDTO.setAuthorities(user.getAuthorities().stream().map(AuthorityMapper::convertToShortDto).collect(Collectors.toList()));
         return userDTO;
     }
 
@@ -26,6 +30,8 @@ public class UserMapper {
         userDTO.setUsername(user.getUsername());
         userDTO.setPassword(user.getPassword());
         userDTO.setCreatedAt(user.getCreatedAt());
+        userDTO.setCity(user.getCity());
+        userDTO.setAuthorities(user.getAuthorities().stream().map(AuthorityMapper::convertToShortDto).collect(Collectors.toList()));
         return userDTO;
     }
 

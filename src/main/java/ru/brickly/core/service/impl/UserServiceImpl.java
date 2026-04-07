@@ -71,13 +71,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserFullDTO updateUser(Long id, UserUpdateDTO dto) {
-        if (userRepository.findByUsername(dto.getUsername()).isPresent()
-                && Objects.equals(userRepository.findByUsername(dto.getUsername()).get().getUsername(),
-                userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found!")).getUsername())) {
+        Optional<User> optionalUser = userRepository.findByUsername(dto.getUsername());
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found!"));
+
+        if (optionalUser.isPresent() && optionalUser.get().getId() != id) {
             throw new UserAlreadyExistsException("User with username " + dto.getUsername() +  " already exists!");
         }
 
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found!"));
 
         if (dto.getUsername() != null) {
             user.setUsername(dto.getUsername());

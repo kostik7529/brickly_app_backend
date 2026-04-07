@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+<!--    <changeSet id="2026-03-26&#45;&#45;0017-inventory-part-data" author="kbadogin">-->
+<!--        <loadData file="db.changelog/data/csv/2026-03-26&#45;&#45;0017-inventory-part-data.csv" tableName="inventory_part" separator="," quotchar='"' encoding="UTF-8"/>-->
+<!--    </changeSet>-->
+
+    <changeSet id="2026-03-26--0017-inventory-part-data" author="kbadogin">
+        <sql>
+            COPY inventory_part(inventory_id, part_num, color_id, quantity, is_spare, img_url)
+            FROM '/csv/2026-03-26--0017-inventory-part-data.csv'
+            DELIMITER ','
+            CSV HEADER;
+        </sql>
+    </changeSet>
+</databaseChangeLog>

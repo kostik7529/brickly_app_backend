@@ -10,6 +10,7 @@ services:
       - "5433:5432"
     volumes:
       - brickly_postgres_data:/var/lib/postgresql/data
+      - ./src/main/resources/db.changelog/data/csv:/csv:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U bricklyuser -d bricklydb"]
       interval: 10s

@@ -23,7 +23,7 @@
             </column>
 
             <column name="parent_part_num" type="VARCHAR(20)">
-                <constraints referencedTableName="part" referencedColumnNames="part_num" foreignKeyName="fk_relationship_arent_part" nullable="false"/>
+                <constraints referencedTableName="part" referencedColumnNames="part_num" foreignKeyName="fk_relationship_parent_part" nullable="false"/>
             </column>
 
         </createTable>
