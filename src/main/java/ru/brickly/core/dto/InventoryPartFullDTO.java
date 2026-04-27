@@ -10,4 +10,5 @@ public class InventoryPartFullDTO {
     private int colorId;
     private int quantity;
     private boolean isSpare;
+    private String imageUrl;
 }

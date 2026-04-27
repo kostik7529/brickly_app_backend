@@ -9,4 +9,5 @@ public class InventoryPartDefaultDTO {
     private ColorShortDTO color;
     private int quantity;
     private boolean isSpare;
+    private String imageUrl;
 }

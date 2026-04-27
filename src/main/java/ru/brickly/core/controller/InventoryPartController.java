@@ -18,9 +18,9 @@ public class InventoryPartController {
     private final InventoryPartService inventoryPartService;
 
     @GetMapping("/by_inventory_id/{id}")
-    public ResponseEntity<Page<InventoryPartDefaultDTO>> getPartsByInventoryId(@PathVariable int id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "30") int size) {
+    public ResponseEntity<Page<InventoryPartDefaultDTO>> getPartsByInventoryIdPaginated(@PathVariable int id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "30") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(inventoryPartService.getPartsByInventoryId(id, pageable));
+        return ResponseEntity.ok(inventoryPartService.getPartsByInventoryIdPaginated(id, pageable));
     }
 
     @PostMapping("/create")

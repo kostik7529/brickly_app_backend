@@ -29,7 +29,7 @@ public class InventoryPartServiceImpl implements InventoryPartService {
     private final InventoryRepository inventoryRepository;
 
     @Override
-    public Page<InventoryPartDefaultDTO> getPartsByInventoryId(Integer id, Pageable pageable) {
+    public Page<InventoryPartDefaultDTO> getPartsByInventoryIdPaginated(Integer id, Pageable pageable) {
         return inventoryPartRepository.findByInventory_Id(id, pageable).map(InventoryPartMapper::convertToDefaultDto);
     }
 

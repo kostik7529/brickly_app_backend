@@ -13,6 +13,7 @@ public class InventoryPartMapper {
         inventoryPartDefaultDTO.setColor(ColorMapper.convertToShortDto(inventoryPart.getColor()));
         inventoryPartDefaultDTO.setQuantity(inventoryPart.getQuantity());
         inventoryPartDefaultDTO.setSpare(inventoryPart.isSpare());
+        inventoryPartDefaultDTO.setImageUrl(inventoryPartDefaultDTO.getImageUrl());
         return inventoryPartDefaultDTO;
     }
 }

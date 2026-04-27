@@ -6,7 +6,7 @@ import ru.brickly.core.dto.InventoryPartCreateDTO;
 import ru.brickly.core.dto.InventoryPartDefaultDTO;
 
 public interface InventoryPartService {
-    Page<InventoryPartDefaultDTO> getPartsByInventoryId(Integer id, Pageable pageable);
+    Page<InventoryPartDefaultDTO> getPartsByInventoryIdPaginated(Integer id, Pageable pageable);
 
     InventoryPartDefaultDTO createInventoryPart(InventoryPartCreateDTO dto);
 }

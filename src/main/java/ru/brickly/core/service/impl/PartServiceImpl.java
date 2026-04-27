@@ -73,7 +73,7 @@ public class PartServiceImpl implements PartService {
         part.setId(dto.getId());
         part.setCategory(partCategory);
         part.setName(dto.getName());
-        part.setImageUrl(dto.getImgUrl());
+        part.setImageUrl(dto.getImageUrl());
         return PartMapper.convertToDefaultDto(partRepository.save(part));
     }
 

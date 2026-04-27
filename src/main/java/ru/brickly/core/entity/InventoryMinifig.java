@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "inventory_part")
-public class InventoryPart {
+@Table(name = "inventory_minifig")
+public class InventoryMinifig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -16,19 +16,9 @@ public class InventoryPart {
     private Inventory inventory;
 
     @ManyToOne
-    @JoinColumn(name = "part_num")
-    private Part part;
-
-    @ManyToOne
-    @JoinColumn(name = "color_id")
-    private Color color;
+    @JoinColumn(name = "fig_num")
+    private Minifig minifig;
 
     @Column(name = "quantity")
     private int quantity;
-
-    @Column(name = "is_spare")
-    private boolean isSpare;
-
-    @Column(name = "img_url")
-    private String imageUrl;
 }
