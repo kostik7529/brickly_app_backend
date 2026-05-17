@@ -2,12 +2,13 @@ package ru.brickly.core.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 public class MeetingUpdateDTO {
-    private LocalDateTime date;
+    private OffsetDateTime date;
     private String address;
+    private String title;
     private Integer duration;
     private Integer typeId;
     private Integer ticketPrice;

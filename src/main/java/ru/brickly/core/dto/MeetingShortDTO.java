@@ -2,12 +2,14 @@ package ru.brickly.core.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 public class MeetingShortDTO {
     private long id;
-    private LocalDateTime date;
+    private OffsetDateTime date;
+    private String previewImagePath;
+    private String title;
     private Integer duration;
     private String address;
     private String description;

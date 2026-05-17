@@ -23,4 +23,7 @@ public class Set {
 
     @Column(name = "num_parts")
     private Integer numParts;
+
+    @Column(name = "img_url")
+    private String imageUrl;
 }

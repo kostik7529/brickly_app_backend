@@ -44,22 +44,22 @@ public class PartServiceImpl implements PartService {
 
     @Override
     public List<PartDefaultDTO> getAllPartsByIdContaining(String idContaining) {
-        return partRepository.findByIdContaining(idContaining).stream().map(PartMapper::convertToDefaultDto).collect(Collectors.toList());
+        return partRepository.findByIdContainingIgnoreCase(idContaining).stream().map(PartMapper::convertToDefaultDto).collect(Collectors.toList());
     }
 
     @Override
     public Page<PartDefaultDTO> getPartsByIdContainingPaginated(Pageable pageable, String idContaining) {
-        return partRepository.findByIdContaining(idContaining, pageable).map(PartMapper::convertToDefaultDto);
+        return partRepository.findByIdContainingIgnoreCase(idContaining, pageable).map(PartMapper::convertToDefaultDto);
     }
 
     @Override
     public List<PartDefaultDTO> getAllPartsByNameContaining(String nameContaining) {
-        return partRepository.findByNameContaining(nameContaining).stream().map(PartMapper::convertToDefaultDto).collect(Collectors.toList());
+        return partRepository.findByNameContainingIgnoreCase(nameContaining).stream().map(PartMapper::convertToDefaultDto).collect(Collectors.toList());
     }
 
     @Override
     public Page<PartDefaultDTO> getPartsByNameContainingPaginated(Pageable pageable, String nameContaining) {
-        return partRepository.findByNameContaining(nameContaining, pageable).map(PartMapper::convertToDefaultDto);
+        return partRepository.findByNameContainingIgnoreCase(nameContaining, pageable).map(PartMapper::convertToDefaultDto);
     }
 
     @Override
@@ -73,7 +73,6 @@ public class PartServiceImpl implements PartService {
         part.setId(dto.getId());
         part.setCategory(partCategory);
         part.setName(dto.getName());
-        part.setImageUrl(dto.getImageUrl());
         return PartMapper.convertToDefaultDto(partRepository.save(part));
     }
 

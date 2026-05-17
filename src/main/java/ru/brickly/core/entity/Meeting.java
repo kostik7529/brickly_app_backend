@@ -3,7 +3,7 @@ package ru.brickly.core.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Set;
 
 @Data
@@ -15,10 +15,13 @@ public class Meeting {
     private long id;
 
     @Column(name = "date")
-    private LocalDateTime date;
+    private OffsetDateTime date;
+
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "announce_date")
-    private LocalDateTime announceDate;
+    private OffsetDateTime announceDate;
 
     @Column(name = "duration")
     private Integer duration;
@@ -44,6 +47,9 @@ public class Meeting {
 
     @Column(name = "discount_modifier")
     private Integer discountModifier;
+
+    @Column(name = "preview_image_path")
+    private String previewImagePath;
 
     @OneToMany(mappedBy = "meeting", cascade = CascadeType.ALL)
     private Set<Ticket> tickets;

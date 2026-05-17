@@ -12,6 +12,8 @@ public class SetMapper {
         setDefaultDTO.setYear(set.getYear());
         setDefaultDTO.setNumParts(set.getNumParts());
         setDefaultDTO.setId(set.getId());
+        setDefaultDTO.setTheme(ThemeMapper.convertToShortDto(set.getTheme()));
+        setDefaultDTO.setImageUrl(set.getImageUrl());
         return setDefaultDTO;
     }
 }

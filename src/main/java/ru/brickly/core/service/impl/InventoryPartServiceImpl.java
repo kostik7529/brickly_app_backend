@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.brickly.core.dto.InventoryPartCreateDTO;
 import ru.brickly.core.dto.InventoryPartDefaultDTO;
+import ru.brickly.core.dto.PartFromItemDTO;
 import ru.brickly.core.entity.Color;
 import ru.brickly.core.entity.Inventory;
 import ru.brickly.core.entity.InventoryPart;
@@ -47,5 +48,10 @@ public class InventoryPartServiceImpl implements InventoryPartService {
         inventoryPart.setInventory(inventory);
 
         return InventoryPartMapper.convertToDefaultDto(inventoryPartRepository.save(inventoryPart));
+    }
+
+    @Override
+    public Page<PartFromItemDTO> getPartsFromItemPaginated(String itemId, Pageable pageable) {
+        return partRepository.findPartsByItemId(itemId, pageable);
     }
 }

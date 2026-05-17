@@ -17,7 +17,4 @@ public class Part {
     @ManyToOne
     @JoinColumn(name = "part_cat_id", nullable = false)
     private PartCategory category;
-
-    @Column(name = "img_url")
-    private String imageUrl;
 }

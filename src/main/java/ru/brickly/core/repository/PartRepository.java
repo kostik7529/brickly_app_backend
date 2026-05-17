@@ -10,7 +10,7 @@ import ru.brickly.core.entity.Part;
 import java.util.List;
 
 @Repository
-public interface PartRepository extends JpaRepository<Part, String> {
+public interface PartRepository extends JpaRepository<Part, String>, PartQueryRepository {
     @Override
     @EntityGraph(attributePaths = {"category"})
     List<Part> findAll();
@@ -20,14 +20,14 @@ public interface PartRepository extends JpaRepository<Part, String> {
     Page<Part> findAll(Pageable pageable);
 
     @EntityGraph(attributePaths = {"category"})
-    List<Part> findByIdContaining(String idLike);
+    List<Part> findByIdContainingIgnoreCase(String idLike);
 
     @EntityGraph(attributePaths = {"category"})
-    Page<Part> findByIdContaining(String idLike, Pageable pageable);
+    Page<Part> findByIdContainingIgnoreCase(String idLike, Pageable pageable);
 
     @EntityGraph(attributePaths = {"category"})
-    List<Part> findByNameContaining(String nameLike);
+    List<Part> findByNameContainingIgnoreCase(String nameLike);
 
     @EntityGraph(attributePaths = {"category"})
-    Page<Part> findByNameContaining(String nameLike, Pageable pageable);
+    Page<Part> findByNameContainingIgnoreCase(String nameLike, Pageable pageable);
 }

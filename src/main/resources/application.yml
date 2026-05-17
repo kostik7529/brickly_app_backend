@@ -52,6 +52,12 @@ springdoc:
     path: /swagger-ui.html
     operationSorter: method
 
+# ====================== Общие настройки ======================
+app:
+  upload:
+    base-dir: uploads          # значение по умолчанию (для local)
+
+# ====================== Профиль LOCAL ======================
 ---
 spring:
   config:
@@ -78,6 +84,7 @@ spring:
     username: guest
     password: guest
 
+# ====================== Профиль DOCKER ======================
 ---
 spring:
   config:
@@ -90,9 +97,6 @@ spring:
     password: bricklypass
     driver-class-name: org.postgresql.Driver
 
-  h2:
-    console:
-      enabled: false
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -103,11 +107,15 @@ spring:
     username: guest
     password: guest
 
-# === GPT Configuration ===
+  # Переопределяем путь для Docker
+  app:
+    upload:
+      base-dir: /app/uploads
+
+# ====================== GPT Configuration ======================
 gpt:
   api:
     key: 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
-#    url: https://api.openai.com/v1/chat/completions
     url: http://104.128.139.152:8888/v1/chat/completions
     timeout: 10000
     model: gpt-5-nano

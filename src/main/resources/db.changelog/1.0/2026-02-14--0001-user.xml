@@ -32,7 +32,20 @@
 
             <column name="city" type="VARCHAR(100)"/>
         </createTable>
-
-
     </changeSet>
+
+    <changeSet id="2026-05-14--0001-user" author="kbadogin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="user" columnName="balance"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="user">
+            <column name="balance" type="INTEGER" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

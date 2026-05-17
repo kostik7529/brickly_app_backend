@@ -14,5 +14,6 @@ public class UserFullDTO {
     private OffsetDateTime createdAt;
     private String email;
     private String city;
+    private int balance;
     private List<AuthorityShortDTO> authorities;
 }

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.brickly.core.dto.MeetingCreateDTO;
+import ru.brickly.core.dto.MeetingCreateRequest;
 import ru.brickly.core.dto.MeetingDefaultDTO;
 import ru.brickly.core.dto.MeetingUpdateDTO;
 import ru.brickly.core.entity.Meeting;
@@ -13,6 +13,7 @@ import ru.brickly.core.exception.MeetingNotFoundException;
 import ru.brickly.core.exception.MeetingTypeNotFoundException;
 import ru.brickly.core.repository.MeetingRepository;
 import ru.brickly.core.repository.MeetingTypeRepository;
+import ru.brickly.core.service.ImageStorageService;
 import ru.brickly.core.service.MeetingService;
 import ru.brickly.core.util.MeetingMapper;
 
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 public class MeetingServiceImpl implements MeetingService {
     private final MeetingRepository meetingRepository;
     private final MeetingTypeRepository meetingTypeRepository;
+    private final ImageStorageService imageStorageService;
 
     @Override
     public List<MeetingDefaultDTO> getAllMeetings() {
@@ -41,19 +43,27 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    public MeetingDefaultDTO createMeeting(MeetingCreateDTO dto) {
-        MeetingType meetingType = meetingTypeRepository.findById(dto.getTypeId()).orElseThrow(() -> new MeetingTypeNotFoundException("Meeting type with id " + dto.getTypeId() + " not found!"));
+    public MeetingDefaultDTO createMeeting(MeetingCreateRequest request) {
+        MeetingType meetingType = meetingTypeRepository.findById(request.getTypeId()).orElseThrow(() -> new MeetingTypeNotFoundException("Meeting type with id " + request.getTypeId() + " not found!"));
         Meeting meeting = new Meeting();
-        meeting.setAddress(dto.getAddress());
-        meeting.setDate(dto.getDate());
-        meeting.setAnnounceDate(dto.getAnnounceDate());
-        meeting.setDuration(dto.getDuration());
-        meeting.setDescription(dto.getDescription());
+        meeting.setAddress(request.getAddress());
+        meeting.setDate(request.getDate());
+        meeting.setTitle(request.getTitle());
+        meeting.setAnnounceDate(request.getAnnounceDate());
+        meeting.setDuration(request.getDuration());
+        meeting.setDescription(request.getDescription());
         meeting.setType(meetingType);
-        meeting.setDiscountAmount(dto.getDiscountAmount());
-        meeting.setDiscountDuration(dto.getDiscountDuration());
-        meeting.setDiscountModifier(dto.getDiscountModifier());
-        meeting.setTicketPrice(dto.getTicketPrice());
+        meeting.setDiscountAmount(request.getDiscountAmount());
+        meeting.setDiscountDuration(request.getDiscountDuration());
+        meeting.setDiscountModifier(request.getDiscountModifier());
+        meeting.setTicketPrice(request.getTicketPrice());
+
+        String imagePath = null;
+        if (request.getPreviewImage() != null && !request.getPreviewImage().isEmpty()) {
+            imagePath = imageStorageService.saveImage(request.getPreviewImage());
+        }
+        meeting.setPreviewImagePath(imagePath);
+
         return MeetingMapper.convertToDefaultDto(meetingRepository.save(meeting));
     }
 
@@ -68,6 +78,10 @@ public class MeetingServiceImpl implements MeetingService {
 
         if (dto.getAddress() != null) {
             meeting.setAddress(dto.getAddress());
+        }
+
+        if (dto.getTitle() != null) {
+            meeting.setTitle(dto.getTitle());
         }
 
         if (dto.getDate() != null) {

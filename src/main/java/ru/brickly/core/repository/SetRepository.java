@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import ru.brickly.core.entity.Set;
 
 @Repository
-public interface SetRepository extends JpaRepository<Set, String> {
+public interface SetRepository extends JpaRepository<Set, String>, SetQueryRepository {
 
     @Override
     @EntityGraph(attributePaths = {"theme"})

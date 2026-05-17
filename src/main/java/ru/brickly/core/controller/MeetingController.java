@@ -5,9 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.brickly.core.dto.MeetingCreateDTO;
+import ru.brickly.core.dto.MeetingCreateRequest;
 import ru.brickly.core.dto.MeetingDefaultDTO;
 import ru.brickly.core.dto.MeetingUpdateDTO;
 import ru.brickly.core.service.MeetingService;
@@ -36,9 +37,9 @@ public class MeetingController {
         return ResponseEntity.ok(meetingService.getMeetingById(id ));
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<MeetingDefaultDTO> createMeeting(@RequestBody MeetingCreateDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(meetingService.createMeeting(dto));
+    @PostMapping(path = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<MeetingDefaultDTO> createMeeting(@ModelAttribute MeetingCreateRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(meetingService.createMeeting(request));
     }
 
     @PutMapping("/update/{id}")

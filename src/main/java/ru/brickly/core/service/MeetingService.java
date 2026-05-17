@@ -2,7 +2,7 @@ package ru.brickly.core.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import ru.brickly.core.dto.MeetingCreateDTO;
+import ru.brickly.core.dto.MeetingCreateRequest;
 import ru.brickly.core.dto.MeetingDefaultDTO;
 import ru.brickly.core.dto.MeetingUpdateDTO;
 
@@ -15,7 +15,7 @@ public interface MeetingService {
 
     Page<MeetingDefaultDTO> getAllMeetingsPaginated(Pageable pageable);
 
-    MeetingDefaultDTO createMeeting(MeetingCreateDTO dto);
+    MeetingDefaultDTO createMeeting(MeetingCreateRequest request);
 
     MeetingDefaultDTO updateMeeting(Long id, MeetingUpdateDTO dto);
 

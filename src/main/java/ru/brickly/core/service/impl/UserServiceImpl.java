@@ -19,7 +19,6 @@ import ru.brickly.core.service.UserService;
 import ru.brickly.core.util.UserMapper;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -81,6 +80,10 @@ public class UserServiceImpl implements UserService {
 
         if (dto.getUsername() != null) {
             user.setUsername(dto.getUsername());
+        }
+
+        if (dto.getBalance() != null) {
+            user.setBalance(dto.getBalance());
         }
 
         if (dto.getPassword() != null) {

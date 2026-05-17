@@ -5,7 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.brickly.core.dto.InventorySetDefaultDTO;
+import ru.brickly.core.dto.SetContainingMinifigDTO;
+import ru.brickly.core.dto.SetContainingPartDTO;
 import ru.brickly.core.repository.InventorySetRepository;
+import ru.brickly.core.repository.SetRepository;
 import ru.brickly.core.service.InventorySetService;
 import ru.brickly.core.util.InventorySetMapper;
 
@@ -13,9 +16,22 @@ import ru.brickly.core.util.InventorySetMapper;
 @RequiredArgsConstructor
 public class InventorySetServiceImpl implements InventorySetService {
     private final InventorySetRepository inventorySetRepository;
+    private final SetRepository setRepository;
 
     @Override
     public Page<InventorySetDefaultDTO> getInventorySetsByInventoryIdPaginated(Integer inventoryId, Pageable pageable) {
         return inventorySetRepository.findByInventory_Id(inventoryId, pageable).map(InventorySetMapper::convertToDefaultDto);
     }
+
+    @Override
+    public Page<SetContainingPartDTO> getSetsContainingPartPaginated(String partId, Integer colorId, Pageable pageable) {
+        return setRepository.findSetsContainingPart(partId, colorId, pageable);
+    }
+
+    @Override
+    public Page<SetContainingMinifigDTO> getSetsContainingMinifigPaginated(String minifigId, Pageable pageable) {
+        return setRepository.findSetsContainingMinifig(minifigId, pageable);
+    }
+
+
 }

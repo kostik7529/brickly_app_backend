@@ -12,5 +12,6 @@ public interface InventoryPartRepository extends JpaRepository<InventoryPart, Lo
     @EntityGraph(attributePaths = {"inventory", "part", "color", "part.category"})
     Page<InventoryPart> findByInventory_Id(Integer id, Pageable pageable);
 
+    @EntityGraph(attributePaths = {"inventory", "part", "color", "part.category"})
     Page<InventoryPart> findByPart_IdAndColor_Id(String partId, Long colorId, Pageable pageable);
 }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.brickly.core.dto.InventoryPartCreateDTO;
 import ru.brickly.core.dto.InventoryPartDefaultDTO;
+import ru.brickly.core.dto.PartFromItemDTO;
 import ru.brickly.core.service.InventoryPartService;
 
 @RestController
@@ -26,5 +27,11 @@ public class InventoryPartController {
     @PostMapping("/create")
     public ResponseEntity<InventoryPartDefaultDTO> createInventoryPart(@RequestBody InventoryPartCreateDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(inventoryPartService.createInventoryPart(dto));
+    }
+
+    @GetMapping("/from_item/{itemId}")
+    public ResponseEntity<Page<PartFromItemDTO>> getPartsFromItemPaginated(@PathVariable String itemId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "150") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(inventoryPartService.getPartsFromItemPaginated(itemId, pageable));
     }
 }

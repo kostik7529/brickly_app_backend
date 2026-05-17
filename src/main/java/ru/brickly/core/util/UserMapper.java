@@ -17,6 +17,7 @@ public class UserMapper {
         userDTO.setEmail(user.getEmail());
         userDTO.setUsername(user.getUsername());
         userDTO.setCreatedAt(user.getCreatedAt());
+        userDTO.setBalance(user.getBalance());
         userDTO.setCity(user.getCity());
         userDTO.setAuthorities(user.getAuthorities().stream().map(AuthorityMapper::convertToShortDto).collect(Collectors.toList()));
         return userDTO;
@@ -28,6 +29,7 @@ public class UserMapper {
         userDTO.setName(user.getName());
         userDTO.setEmail(user.getEmail());
         userDTO.setUsername(user.getUsername());
+        userDTO.setBalance(user.getBalance());
         userDTO.setPassword(user.getPassword());
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setCity(user.getCity());

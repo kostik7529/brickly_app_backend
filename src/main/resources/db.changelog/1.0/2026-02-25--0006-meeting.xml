@@ -62,6 +62,24 @@
         <addColumn tableName="meeting">
             <column name="duration" type="INTEGER"/>
         </addColumn>
+    </changeSet>
 
+    <changeSet id="2026-05-16--0007-meeting" author="kbadogin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists columnName="preview_img_path" tableName="meeting"/>
+            </not>
+            <not>
+                <columnExists columnName="title" tableName="meeting"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="meeting">
+            <column name="preview_image_path" type="VARCHAR(100)"/>
+        </addColumn>
+
+        <addColumn tableName="meeting">
+            <column name="title" type="VARCHAR(50)"/>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

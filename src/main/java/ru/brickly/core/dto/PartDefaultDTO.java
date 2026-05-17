@@ -7,5 +7,4 @@ public class PartDefaultDTO {
     private String id;
     private String name;
     private PartCategoryShortDTO category;
-    private String imageUrl;
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.brickly.core.dto.PartCreateDTO;
 import ru.brickly.core.dto.PartDefaultDTO;
 import ru.brickly.core.dto.PartUpdateDTO;
+import ru.brickly.core.dto.SetDefaultDTO;
 import ru.brickly.core.service.PartService;
 
 import java.util.List;

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import ru.brickly.core.entity.Minifig;
 
 @Repository
-public interface MinifigRepository extends JpaRepository<Minifig, String> {
+public interface MinifigRepository extends JpaRepository<Minifig, String>, MinifigQueryRepository {
     Page<Minifig> findByNameContaining(String nameContaining, Pageable pageable);
 }
