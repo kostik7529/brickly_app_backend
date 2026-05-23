@@ -51,7 +51,12 @@ public class InventoryPartServiceImpl implements InventoryPartService {
     }
 
     @Override
-    public Page<PartFromItemDTO> getPartsFromItemPaginated(String itemId, Pageable pageable) {
-        return partRepository.findPartsByItemId(itemId, pageable);
+    public Page<PartFromItemDTO> getPartsBySetIdPaginated(String itemId, Pageable pageable) {
+        return partRepository.findPartsBySetId(itemId, pageable);
+    }
+
+    @Override
+    public Page<PartFromItemDTO> getPartsByMinifigIdPaginated(String minifigId, Pageable pageable) {
+        return partRepository.findPartsByMinifigId(minifigId, pageable);
     }
 }

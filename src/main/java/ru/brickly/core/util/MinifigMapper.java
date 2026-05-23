@@ -12,6 +12,7 @@ public class MinifigMapper {
         minifigDefaultDTO.setName(minifig.getName());
         minifigDefaultDTO.setImageUrl(minifig.getImageUrl());
         minifigDefaultDTO.setNumParts(minifig.getNumParts());
+        minifigDefaultDTO.setBlMinifig(BLMinifigMapper.convertToDefaultDto(minifig.getBlMinifig()));
         return minifigDefaultDTO;
     }
 }

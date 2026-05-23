@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2026-05-21--0021-bl-minifig" author="kbadogin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="bl_minifig"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="bl_minifig">
+            <column name="rb_id" type="VARCHAR(20)">
+                <constraints primaryKey="true" nullable="false" foreignKeyName="rb_fig_num" referencedTableName="minifig" referencedColumnNames="fig_num"/>
+            </column>
+
+            <column name="id" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="category_name" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="image_url" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="url" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

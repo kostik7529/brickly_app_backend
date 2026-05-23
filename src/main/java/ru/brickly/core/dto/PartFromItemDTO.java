@@ -8,6 +8,7 @@ import lombok.Data;
 public class PartFromItemDTO {
     private String id;
     private String name;
+    private String blId;
     private Integer categoryId;
     private String categoryName;
     private Integer colorId;

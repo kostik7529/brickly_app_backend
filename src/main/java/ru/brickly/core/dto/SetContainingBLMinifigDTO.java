@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class SetContainingMinifigDTO {
+public class SetContainingBLMinifigDTO {
     private String id;
     private String name;
     private Integer year;

@@ -11,4 +11,10 @@ public class MinifigContainingPartDTO {
     private int numParts;
     private String imageUrl;
     private Integer partQuantity;
+
+    private String blId;
+    private String blName;
+    private String blCategoryName;
+    private String blImageUrl;
+    private String blUrl;
 }

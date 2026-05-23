@@ -17,4 +17,7 @@ public class Part {
     @ManyToOne
     @JoinColumn(name = "part_cat_id", nullable = false)
     private PartCategory category;
+
+    @OneToOne(mappedBy = "part", fetch = FetchType.LAZY)
+    private BLPart blPart;
 }

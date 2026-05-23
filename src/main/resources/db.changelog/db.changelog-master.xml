@@ -21,7 +21,9 @@
     <include file="db.changelog/1.0/2026-03-22--0016-inventory.xml"/>
     <include file="db.changelog/1.0/2026-03-26--0017-inventory-part.xml"/>
     <include file="db.changelog/1.0/2026-04-07--0018-inventory-minifig.xml"/>
-    <include file="db.changelog/1.0/2026-05-14--0020-lot.xml"/>
+    <include file="db.changelog/1.0/2026-05-14--0020-listing.xml"/>
+    <include file="db.changelog/1.0/2026-05-21--0021-bl-minifig.xml"/>
+    <include file="db.changelog/1.0/2026-05-22--0022-bl-part.xml"/>
 
     <include file="db.changelog/data/2026-02-14--0001-user-data.xml"/>
     <include file="db.changelog/data/2026-02-14--0002-authority-data.xml"/>
@@ -41,6 +43,8 @@
     <include file="db.changelog/data/2026-03-22--0016-inventory-data.xml"/>
     <include file="db.changelog/data/2026-03-26--0017-inventory-part-data.xml"/>
     <include file="db.changelog/data/2026-04-07--0018-inventory-minifig-data.xml"/>
-    <include file="db.changelog/data/2026-05-14--0020-lot-data.xml"/>
+    <include file="db.changelog/data/2026-05-14--0020-listing-data.xml"/>
+    <include file="db.changelog/data/2026-05-21--0021-bl-minifig-data.xml"/>
+    <include file="db.changelog/data/2026-05-22--0022-bl-part-data.xml"/>
 
 </databaseChangeLog>

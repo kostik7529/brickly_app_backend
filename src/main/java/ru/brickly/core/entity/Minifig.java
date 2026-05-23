@@ -1,9 +1,6 @@
 package ru.brickly.core.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -22,4 +19,7 @@ public class Minifig {
 
     @Column(name = "img_url")
     private String imageUrl;
+
+    @OneToOne(mappedBy = "minifig", fetch = FetchType.LAZY)
+    private BLMinifig blMinifig;
 }

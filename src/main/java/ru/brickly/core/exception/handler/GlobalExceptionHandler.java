@@ -138,5 +138,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-
+    @ExceptionHandler(ListingNotFoundException.class)
+    public ResponseEntity<String> handleListingNotFoundException(ListingNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }

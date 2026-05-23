@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.brickly.core.dto.InventorySetDefaultDTO;
-import ru.brickly.core.dto.SetContainingMinifigDTO;
+import ru.brickly.core.dto.SetContainingBLMinifigDTO;
 import ru.brickly.core.dto.SetContainingPartDTO;
 import ru.brickly.core.service.InventorySetService;
 
@@ -30,7 +30,7 @@ public class InventorySetController {
     }
 
     @GetMapping("/containing_minifig/{minifigId}")
-    public ResponseEntity<Page<SetContainingMinifigDTO>> getSetsContainingMinifig(@PathVariable String minifigId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size) {
+    public ResponseEntity<Page<SetContainingBLMinifigDTO>> getSetsContainingMinifig(@PathVariable String minifigId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(inventorySetService.getSetsContainingMinifigPaginated(minifigId, pageable));
     }

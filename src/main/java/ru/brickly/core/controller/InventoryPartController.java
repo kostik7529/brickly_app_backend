@@ -29,9 +29,15 @@ public class InventoryPartController {
         return ResponseEntity.status(HttpStatus.CREATED).body(inventoryPartService.createInventoryPart(dto));
     }
 
-    @GetMapping("/from_item/{itemId}")
-    public ResponseEntity<Page<PartFromItemDTO>> getPartsFromItemPaginated(@PathVariable String itemId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "150") int size) {
+    @GetMapping("/from_set/{setId}")
+    public ResponseEntity<Page<PartFromItemDTO>> getPartsBySetIdPaginated(@PathVariable String setId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "150") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(inventoryPartService.getPartsFromItemPaginated(itemId, pageable));
+        return ResponseEntity.ok(inventoryPartService.getPartsBySetIdPaginated(setId, pageable));
+    }
+
+    @GetMapping("/from_minifig/{minifigId}")
+    public ResponseEntity<Page<PartFromItemDTO>> getPartsByMinifigIdPaginated(@PathVariable String minifigId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "150") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(inventoryPartService.getPartsByMinifigIdPaginated(minifigId, pageable));
     }
 }

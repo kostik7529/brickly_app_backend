@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="2026-05-14--0020-lot-data" author="kbadogin">
-        <loadData file="db.changelog/data/csv/2026-05-14--0020-lot-data.csv" tableName="lot" separator=";" quotchar='"' encoding="UTF-8"/>
+    <changeSet id="2026-05-21--0021-bl-minifig-data" author="kbadogin">
+        <loadData file="db.changelog/data/csv/2026-05-21--0021-bl-minifig-data.csv" tableName="bl_minifig" separator="," quotchar='"' encoding="UTF-8"/>
     </changeSet>
 </databaseChangeLog>

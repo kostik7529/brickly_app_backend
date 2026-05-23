@@ -3,14 +3,14 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="2026-05-14--0020-lot" author="kbadogin">
+    <changeSet id="2026-05-14--0020-listing" author="kbadogin">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="lot"/>
+                <tableExists tableName="listing"/>
             </not>
         </preConditions>
 
-        <createTable tableName="lot">
+        <createTable tableName="listing">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -31,7 +31,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="description" type="VARCHAR(500)"/>
+            <column name="description" type="VARCHAR"/>
 
             <column name="condition" type="VARCHAR(10)">
                 <constraints nullable="false"/>

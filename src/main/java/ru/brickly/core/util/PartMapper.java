@@ -11,6 +11,7 @@ public class PartMapper {
         partDefaultDTO.setName(part.getName());
         partDefaultDTO.setId(part.getId());
         partDefaultDTO.setCategory(PartCategoryMapper.convertToShortDto(part.getCategory()));
+        partDefaultDTO.setBlPart(BLPartMapper.convertToDefaultDto(part.getBlPart()));
         return partDefaultDTO;
     }
 

@@ -34,6 +34,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/api/app/users/exists/**").permitAll()
                         .requestMatchers("/api/app/users/register").permitAll()
+
                         .requestMatchers(HttpMethod.DELETE, "/api/app/users/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/app/users/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .anyRequest().authenticated()

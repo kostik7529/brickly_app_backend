@@ -1,0 +1,82 @@
+package ru.brickly.core.service.impl;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import ru.brickly.core.dto.ListingDefaultDTO;
+import ru.brickly.core.dto.ListingUpdateDTO;
+import ru.brickly.core.entity.Listing;
+import ru.brickly.core.exception.ListingNotFoundException;
+import ru.brickly.core.repository.ListingRepository;
+import ru.brickly.core.service.ListingService;
+import ru.brickly.core.util.ListingMapper;
+
+@Service
+@RequiredArgsConstructor
+public class ListingServiceImpl implements ListingService {
+    private final ListingRepository listingRepository;
+
+    @Override
+    public Page<ListingDefaultDTO> getListingsPaginated(Pageable pageable) {
+        return listingRepository.findAll(pageable).map(ListingMapper::convertToDefaultDto);
+    }
+
+    @Override
+    public ListingDefaultDTO getListingById(Long id) {
+        return ListingMapper.convertToDefaultDto(listingRepository.findById(id).orElseThrow(() -> new ListingNotFoundException("Listing with id " + id + " not found!")));
+    }
+
+    @Override
+    public Page<ListingDefaultDTO> getListingsByStatusPaginated(String status, Pageable pageable) {
+        return listingRepository.findListingByStatus(status, pageable).map(ListingMapper::convertToDefaultDto);
+    }
+
+    @Override
+    public Page<ListingDefaultDTO> getListingsByItemIdPaginated(String itemId, Pageable pageable) {
+        return listingRepository.findByItemId(itemId, pageable).map(ListingMapper::convertToDefaultDto);
+    }
+
+    @Override
+    public Page<ListingDefaultDTO> getListingsByDescriptionContainingPaginated(String descriptionContaining, Pageable pageable) {
+        return listingRepository.findByDescriptionContainingIgnoreCase(descriptionContaining, pageable).map(ListingMapper::convertToDefaultDto);
+    }
+
+    @Override
+    public ListingDefaultDTO createListing() {
+        return null;
+    }
+
+    @Override
+    public ListingDefaultDTO updateListing(Long id, ListingUpdateDTO dto) {
+        Listing listing = listingRepository.findById(id).orElseThrow(() -> new ListingNotFoundException("Listing with id " + id + " not found!"));
+
+        if (dto.getDescription() != null) {
+            listing.setDescription(dto.getDescription());
+        }
+
+        if (dto.getQuantity() != null) {
+            listing.setQuantity(dto.getQuantity());
+        }
+
+        if (dto.getPrice() != null) {
+            listing.setPrice(dto.getPrice());
+        }
+
+        if (dto.getViewsCount() != null) {
+            listing.setViewsCount(dto.getViewsCount());
+        }
+
+        if (dto.getStatus() != null) {
+            listing.setStatus(dto.getStatus());
+        }
+
+        return ListingMapper.convertToDefaultDto(listingRepository.save(listing));
+    }
+
+    @Override
+    public void deleteListingById(Long id) {
+        listingRepository.findById(id).orElseThrow(() -> new ListingNotFoundException("Listing with id " + id + " not found!"));
+        listingRepository.deleteById(id);
+    }
+}

@@ -11,5 +11,7 @@ public interface InventoryPartService {
 
     InventoryPartDefaultDTO createInventoryPart(InventoryPartCreateDTO dto);
 
-    Page<PartFromItemDTO> getPartsFromItemPaginated(String itemId, Pageable pageable);
+    Page<PartFromItemDTO> getPartsBySetIdPaginated(String itemId, Pageable pageable);
+
+    Page<PartFromItemDTO> getPartsByMinifigIdPaginated(String minifigId, Pageable pageable);
 }

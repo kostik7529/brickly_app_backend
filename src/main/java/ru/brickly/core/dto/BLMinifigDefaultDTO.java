@@ -3,10 +3,10 @@ package ru.brickly.core.dto;
 import lombok.Data;
 
 @Data
-public class MinifigDefaultDTO {
+public class BLMinifigDefaultDTO {
     private String id;
     private String name;
-    private int numParts;
+    private String categoryName;
     private String imageUrl;
-    private BLMinifigDefaultDTO blMinifig;
+    private String url;
 }
