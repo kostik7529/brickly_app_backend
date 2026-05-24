@@ -1,5 +1,6 @@
 package ru.brickly.core.service.impl;
 
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,21 +16,28 @@ import java.util.UUID;
 @Service
 public class ImageStorageServiceImpl implements ImageStorageService {
 
-    @Value("${app.upload.base-dir:uploads}")
+    @Value("${app.upload.base-dir}")
     private String baseUploadDir;
 
     @Override
-    public String saveImage(MultipartFile file) {
+    public String saveMeetingImage(MultipartFile file) {
+        return saveAndCompressImage(file, "meetings", 1000, 0.8f);
+    }
+
+    @Override
+    public String saveListingImage(MultipartFile file) {
+        return saveAndCompressImage(file, "listings", 1200, 0.85f);
+    }
+
+    private String saveAndCompressImage(MultipartFile file, String folder, int maxWidth, float quality) {
         if (file.isEmpty()) {
             throw new ImageUploadException("Image file is empty!");
         }
 
         try {
-            // Папка для сохранения
-            Path uploadPath = Paths.get(baseUploadDir, "meetings/previews");
+            Path uploadPath = Paths.get(baseUploadDir, folder);
             Files.createDirectories(uploadPath);
 
-            // Генерация имени файла
             String originalName = file.getOriginalFilename();
             String extension = originalName != null && originalName.contains(".")
                     ? originalName.substring(originalName.lastIndexOf("."))
@@ -38,13 +46,12 @@ public class ImageStorageServiceImpl implements ImageStorageService {
             String newFileName = UUID.randomUUID() + extension.toLowerCase();
             Path filePath = uploadPath.resolve(newFileName);
 
-            // Сохраняем файл
-            file.transferTo(filePath.toFile());
+            Thumbnails.of(file.getInputStream())
+                    .width(maxWidth)
+                    .outputQuality(quality)
+                    .toFile(filePath.toFile());
 
-            System.out.println("✅ Image saved: " + filePath);
-
-            // Возвращаем URL-путь (для фронта)
-            return "/uploads/meetings/previews/" + newFileName;
+            return "/uploads/" + folder + "/" + newFileName;
 
         } catch (IOException e) {
             throw new ImageUploadException("Failed to save image: " + e.getMessage());

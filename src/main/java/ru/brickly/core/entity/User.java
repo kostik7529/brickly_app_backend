@@ -49,4 +49,10 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
+
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
+    private List<Listing> listings;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CartItem> cartItems;
 }

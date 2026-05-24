@@ -1,28 +1,3 @@
-#spring:
-#  datasource:
-#    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_UPPER=false;CASE_INSENSITIVE_IDENTIFIERS=TRUE
-#  #    url: jdbc:postgresql://postgres@localhost:5432/postgres
-#
-#  h2:
-#    console:
-#      enabled: true
-#
-#  liquibase:
-#    enabled: true
-#    change-log: classpath:db.changelog/db.changelog-master.xml
-#
-#  jpa:
-#    generate-ddl: false
-#    hibernate:
-#      ddl-auto: none
-#    show-sql: true
-#
-#  spring-doc:
-#    swagger-ui:
-#      path: /swagger-ui.html
-#      operationsSorter: method
-
-
 spring:
   profiles:
     active: local
@@ -47,6 +22,15 @@ spring:
           multiplier: 2.0
           max-interval: 10000
 
+  # ====================== Настройки загрузки файлов ======================
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 12MB
+      max-request-size: 55MB
+      file-size-threshold: 2KB
+      resolve-lazily: true
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
@@ -55,7 +39,7 @@ springdoc:
 # ====================== Общие настройки ======================
 app:
   upload:
-    base-dir: uploads          # значение по умолчанию (для local)
+    base-dir: uploads
 
 # ====================== Профиль LOCAL ======================
 ---
@@ -97,7 +81,6 @@ spring:
     password: bricklypass
     driver-class-name: org.postgresql.Driver
 
-
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
@@ -107,15 +90,14 @@ spring:
     username: guest
     password: guest
 
-  # Переопределяем путь для Docker
   app:
     upload:
       base-dir: /app/uploads
 
-# ====================== GPT Configuration ======================
+# ====================== GPT ======================
 gpt:
   api:
-    key: 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
+    key: ${GPT_API_KEY}
     url: http://104.128.139.152:8888/v1/chat/completions
     timeout: 10000
     model: gpt-5-nano

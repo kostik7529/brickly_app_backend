@@ -4,10 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.brickly.core.dto.ListingCreateRequest;
 import ru.brickly.core.dto.ListingDefaultDTO;
 import ru.brickly.core.dto.ListingUpdateDTO;
+import ru.brickly.core.entity.Listing;
 import ru.brickly.core.service.ListingService;
 
 @RestController
@@ -43,6 +47,11 @@ public class ListingController {
     public ResponseEntity<Page<ListingDefaultDTO>> getListingsByDescriptionContainingPaginated(@PathVariable String descriptionContaining, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(listingService.getListingsByDescriptionContainingPaginated(descriptionContaining, pageable));
+    }
+
+    @PostMapping(path = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ListingDefaultDTO> createListing(@ModelAttribute ListingCreateRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(listingService.createListing(request));
     }
 
     @PutMapping("/update/{id}")

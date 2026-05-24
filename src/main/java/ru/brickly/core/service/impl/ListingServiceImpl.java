@@ -4,18 +4,31 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import ru.brickly.core.dto.ListingCreateRequest;
 import ru.brickly.core.dto.ListingDefaultDTO;
 import ru.brickly.core.dto.ListingUpdateDTO;
 import ru.brickly.core.entity.Listing;
+import ru.brickly.core.entity.ListingImage;
+import ru.brickly.core.entity.User;
 import ru.brickly.core.exception.ListingNotFoundException;
+import ru.brickly.core.exception.UserNotFoundException;
 import ru.brickly.core.repository.ListingRepository;
+import ru.brickly.core.repository.ListingImageRepository;
+import ru.brickly.core.repository.UserRepository;
+import ru.brickly.core.service.ImageStorageService;
 import ru.brickly.core.service.ListingService;
 import ru.brickly.core.util.ListingMapper;
+
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
 public class ListingServiceImpl implements ListingService {
     private final ListingRepository listingRepository;
+    private final ListingImageRepository listingImageRepository;
+    private final ImageStorageService imageStorageService;
+    private final UserRepository userRepository;
 
     @Override
     public Page<ListingDefaultDTO> getListingsPaginated(Pageable pageable) {
@@ -43,8 +56,44 @@ public class ListingServiceImpl implements ListingService {
     }
 
     @Override
-    public ListingDefaultDTO createListing() {
-        return null;
+    public ListingDefaultDTO createListing(ListingCreateRequest request) {
+        User seller = userRepository.findById(request.getSellerId()).orElseThrow(() -> new UserNotFoundException("User with id " + request.getSellerId() + " not found!"));
+        
+        
+        Listing listing = new Listing();
+        listing.setStatus(request.getStatus());
+        listing.setSeller(seller);
+        listing.setItemType(request.getItemType());
+        listing.setItemId(request.getItemId());
+        listing.setQuantity(request.getQuantity());
+        listing.setDescription(request.getDescription());
+        listing.setCondition(request.getCondition());
+        listing.setConditionRate(request.getConditionRate());
+        listing.setPrice(request.getPrice());
+        listing.setViewsCount(0);
+        listing.setListingImages(new ArrayList<>());
+        Listing savedListing = listingRepository.save(listing);
+
+        if (request.getImages() != null && !request.getImages().isEmpty()) {
+            for (int i = 0; i < request.getImages().size(); i++) {
+                MultipartFile file = request.getImages().get(i);
+
+                if (!file.isEmpty()) {
+                    String imagePath = imageStorageService.saveListingImage(file);
+
+                    ListingImage listingImage = new ListingImage();
+                    listingImage.setListing(listing);
+                    listingImage.setPositionId(i);
+                    listingImage.setImagePath(imagePath);
+
+                    ListingImage savedImage =listingImageRepository.save(listingImage);
+
+                    savedListing.getListingImages().add(savedImage);
+                }
+            }
+        }
+
+        return ListingMapper.convertToDefaultDto(savedListing);
     }
 
     @Override

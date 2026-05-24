@@ -60,7 +60,7 @@ public class MeetingServiceImpl implements MeetingService {
 
         String imagePath = null;
         if (request.getPreviewImage() != null && !request.getPreviewImage().isEmpty()) {
-            imagePath = imageStorageService.saveImage(request.getPreviewImage());
+            imagePath = imageStorageService.saveMeetingImage(request.getPreviewImage());
         }
         meeting.setPreviewImagePath(imagePath);
 

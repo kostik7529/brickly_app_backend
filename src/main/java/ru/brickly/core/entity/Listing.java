@@ -3,6 +3,8 @@ package ru.brickly.core.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "listing")
@@ -10,6 +12,10 @@ public class Listing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "seller_id", nullable = false)
+    private User seller;
 
     @Column(name = "status")
     private String status;
@@ -37,4 +43,7 @@ public class Listing {
 
     @Column(name = "views_count")
     private int viewsCount;
+
+    @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL)
+    private List<ListingImage> listingImages;
 }

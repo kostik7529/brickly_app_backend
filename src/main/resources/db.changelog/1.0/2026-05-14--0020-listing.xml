@@ -15,6 +15,10 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
+            <column name="seller_id" type="BIGINT">
+                <constraints foreignKeyName="fk_seller_id" referencedColumnNames="id" referencedTableName="user" nullable="false"/>
+            </column>
+
             <column name="status" type="VARCHAR(15)">
                 <constraints nullable="false"/>
             </column>

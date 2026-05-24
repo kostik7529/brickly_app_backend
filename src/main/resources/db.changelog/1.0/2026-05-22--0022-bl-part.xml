@@ -12,7 +12,7 @@
 
         <createTable tableName="bl_part">
             <column name="rb_id" type="VARCHAR(20)">
-                <constraints primaryKey="true" nullable="false" foreignKeyName="rb_part_num" referencedTableName="part" referencedColumnNames="part_num"/>
+                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_rb_part_num" referencedTableName="part" referencedColumnNames="part_num"/>
             </column>
 
             <column name="id" type="VARCHAR(30)">

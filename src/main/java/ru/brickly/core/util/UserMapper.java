@@ -19,6 +19,7 @@ public class UserMapper {
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setBalance(user.getBalance());
         userDTO.setCity(user.getCity());
+        userDTO.setCartItems(user.getCartItems() != null ? user.getCartItems().stream().map(CartItemMapper::convertToDefaultDto).collect(Collectors.toList()) : null);
         userDTO.setAuthorities(user.getAuthorities().stream().map(AuthorityMapper::convertToShortDto).collect(Collectors.toList()));
         return userDTO;
     }
