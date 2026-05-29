@@ -56,6 +56,16 @@ public class ListingServiceImpl implements ListingService {
     }
 
     @Override
+    public Page<ListingDefaultDTO> getListingsBySellerIdPaginated(Long sellerId, Pageable pageable) {
+        return listingRepository.findBySellerId(sellerId, pageable).map(ListingMapper::convertToDefaultDto);
+    }
+
+    @Override
+    public Page<ListingDefaultDTO> getListingsByDescriptionContainingOrItemIdContainingPaginated(String stringContained, Pageable pageable) {
+        return listingRepository.findByDescriptionContainingIgnoreCaseOrItemIdContainingIgnoreCase(stringContained, stringContained, pageable).map(ListingMapper::convertToDefaultDto);
+    }
+
+    @Override
     public ListingDefaultDTO createListing(ListingCreateRequest request) {
         User seller = userRepository.findById(request.getSellerId()).orElseThrow(() -> new UserNotFoundException("User with id " + request.getSellerId() + " not found!"));
         
@@ -86,7 +96,7 @@ public class ListingServiceImpl implements ListingService {
                     listingImage.setPositionId(i);
                     listingImage.setImagePath(imagePath);
 
-                    ListingImage savedImage =listingImageRepository.save(listingImage);
+                    ListingImage savedImage = listingImageRepository.save(listingImage);
 
                     savedListing.getListingImages().add(savedImage);
                 }
@@ -125,7 +135,16 @@ public class ListingServiceImpl implements ListingService {
 
     @Override
     public void deleteListingById(Long id) {
-        listingRepository.findById(id).orElseThrow(() -> new ListingNotFoundException("Listing with id " + id + " not found!"));
+        Listing listing = listingRepository.findById(id).orElseThrow(() -> new ListingNotFoundException("Listing with id " + id + " not found!"));
+
+        if (listing.getListingImages() != null) {
+            for (ListingImage image : listing.getListingImages()) {
+                if (image.getImagePath() != null) {
+                    imageStorageService.deleteImage(image.getImagePath());
+                }
+            }
+        }
+
         listingRepository.deleteById(id);
     }
 }

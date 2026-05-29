@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2026-05-29--0027-order-item" author="kbadogin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="order_item"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="order_item">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="status" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="price" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quantity" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="listing_id" type="BIGINT">
+                <constraints referencedColumnNames="id" referencedTableName="listing" foreignKeyName="fk_order_listing" nullable="false"/>
+            </column>
+
+            <column name="order_id" type="BIGINT">
+                <constraints referencedTableName="order" referencedColumnNames="id" foreignKeyName="fk_order_item_order" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

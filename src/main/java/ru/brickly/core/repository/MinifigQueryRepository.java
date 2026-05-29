@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import ru.brickly.core.dto.MinifigContainingPartDTO;
+import ru.brickly.core.dto.MinifigContainingBlPartDTO;
 import ru.brickly.core.dto.MinifigFromSetDTO;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public interface MinifigQueryRepository {
     JOIN inventory_part ip ON ip.inventory_id = latest_inv.inventory_id
 
     JOIN bl_part blp ON blp.rb_id = ip.part_num
-                    AND blp.id = :partId
+                    AND blp.id = :blPartId
 
     LEFT JOIN bl_minifig bl ON bl.rb_id = mf.fig_num
 
@@ -75,13 +75,13 @@ public interface MinifigQueryRepository {
     JOIN inventory_part ip ON ip.inventory_id = latest_inv.inventory_id
 
     JOIN bl_part blp ON blp.rb_id = ip.part_num
-                    AND blp.id = :partId
+                    AND blp.id = :blPartId
 
     WHERE (:colorId IS NULL OR ip.color_id = :colorId)
     """,
             nativeQuery = true)
-    Page<MinifigContainingPartDTO> findMinifigsContainingPart(
-            @Param("partId") String partId,
+    Page<MinifigContainingBlPartDTO> findMinifigsContainingBlPart(
+            @Param("blPartId") String blPartId,
             @Param("colorId") Integer colorId,
             Pageable pageable);
 

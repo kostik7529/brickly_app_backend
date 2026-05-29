@@ -46,4 +46,7 @@ public class Listing {
 
     @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL)
     private List<ListingImage> listingImages;
+
+    @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems;
 }

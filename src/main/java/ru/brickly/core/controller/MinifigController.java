@@ -12,6 +12,8 @@ import ru.brickly.core.dto.MinifigDefaultDTO;
 import ru.brickly.core.dto.MinifigUpdateDTO;
 import ru.brickly.core.service.MinifigService;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/app/minifigs")
@@ -33,6 +35,11 @@ public class MinifigController {
     @GetMapping("/by_id/{id}")
     public ResponseEntity<MinifigDefaultDTO> getMinifigById(@PathVariable String id) {
         return ResponseEntity.ok(minifigService.getMinifigById(id));
+    }
+
+    @GetMapping("by_bl_id/{blId}")
+    public ResponseEntity<List<MinifigDefaultDTO>> getMinifigsByBlId(@PathVariable String blId) {
+        return ResponseEntity.ok(minifigService.getAllMinifigsByBlId(blId));
     }
 
     @PostMapping("/create")

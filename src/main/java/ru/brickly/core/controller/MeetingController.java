@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.brickly.core.dto.MeetingCreateRequest;
 import ru.brickly.core.dto.MeetingDefaultDTO;
+import ru.brickly.core.dto.MeetingShortDTO;
 import ru.brickly.core.dto.MeetingUpdateDTO;
 import ru.brickly.core.service.MeetingService;
 
@@ -35,6 +36,17 @@ public class MeetingController {
     @GetMapping("/by_id/{id}")
     public ResponseEntity<MeetingDefaultDTO> getMeetingById(@PathVariable Long id) {
         return ResponseEntity.ok(meetingService.getMeetingById(id ));
+    }
+
+    @GetMapping("/by_future")
+    public ResponseEntity<List<MeetingDefaultDTO>> getAllFutureMeetings() {
+        return ResponseEntity.ok(meetingService.getAllFutureMeetings());
+    }
+
+    @GetMapping("/by_creator_id/{creatorId}")
+    public ResponseEntity<Page<MeetingShortDTO>> abc(@PathVariable long creatorId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(meetingService.getMeetingsByCreatorIdPaginated(creatorId, pageable));
     }
 
     @PostMapping(path = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

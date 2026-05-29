@@ -9,6 +9,7 @@ import java.time.OffsetDateTime;
 public class MeetingCreateRequest {
     private OffsetDateTime date;
     private String title;
+    private long creatorId;
     private OffsetDateTime announceDate;
     private Integer duration;
     private String address;

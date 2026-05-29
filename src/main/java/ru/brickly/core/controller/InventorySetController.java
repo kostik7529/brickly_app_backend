@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.brickly.core.dto.InventorySetDefaultDTO;
 import ru.brickly.core.dto.SetContainingBLMinifigDTO;
-import ru.brickly.core.dto.SetContainingPartDTO;
+import ru.brickly.core.dto.SetContainingBlPartDTO;
 import ru.brickly.core.service.InventorySetService;
 
 @RestController
@@ -24,7 +24,7 @@ public class InventorySetController {
     }
 
     @GetMapping("/containing_part/{partId}")
-    public ResponseEntity<Page<SetContainingPartDTO>> getSetsContainingPart(@PathVariable String partId, @RequestParam(required = false) Integer colorId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size) {
+    public ResponseEntity<Page<SetContainingBlPartDTO>> getSetsContainingPart(@PathVariable String partId, @RequestParam(required = false) Integer colorId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(inventorySetService.getSetsContainingPartPaginated(partId, colorId, pageable));
     }

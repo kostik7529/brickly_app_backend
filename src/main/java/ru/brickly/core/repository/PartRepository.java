@@ -12,22 +12,25 @@ import java.util.List;
 @Repository
 public interface PartRepository extends JpaRepository<Part, String>, PartQueryRepository {
     @Override
-    @EntityGraph(attributePaths = {"category"})
+    @EntityGraph(attributePaths = {"category", "blPart"})
     List<Part> findAll();
 
     @Override
-    @EntityGraph(attributePaths = {"category"})
+    @EntityGraph(attributePaths = {"category", "blPart"})
     Page<Part> findAll(Pageable pageable);
 
-    @EntityGraph(attributePaths = {"category"})
+    @EntityGraph(attributePaths = {"category", "blPart"})
     List<Part> findByIdContainingIgnoreCase(String idLike);
 
-    @EntityGraph(attributePaths = {"category"})
+    @EntityGraph(attributePaths = {"category", "blPart"})
     Page<Part> findByIdContainingIgnoreCase(String idLike, Pageable pageable);
 
-    @EntityGraph(attributePaths = {"category"})
+    @EntityGraph(attributePaths = {"category", "blPart"})
     List<Part> findByNameContainingIgnoreCase(String nameLike);
 
-    @EntityGraph(attributePaths = {"category"})
+    @EntityGraph(attributePaths = {"category", "blPart"})
     Page<Part> findByNameContainingIgnoreCase(String nameLike, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"category", "blPart"})
+    List<Part> findAllByBlPart_Id(String blId);
 }

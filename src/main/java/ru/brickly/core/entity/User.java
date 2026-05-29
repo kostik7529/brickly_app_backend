@@ -55,4 +55,10 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CartItem> cartItems;
+
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
+    private List<Meeting> meetings;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Order> orders;
 }

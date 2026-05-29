@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.brickly.core.dto.InventoryMinifigDefaultDTO;
-import ru.brickly.core.dto.MinifigContainingPartDTO;
+import ru.brickly.core.dto.MinifigContainingBlPartDTO;
 import ru.brickly.core.dto.MinifigFromSetDTO;
 import ru.brickly.core.repository.InventoryMinifigRepository;
 import ru.brickly.core.repository.MinifigRepository;
@@ -26,8 +26,8 @@ public class InventoryMinifigServiceImpl implements InventoryMinifigService {
     }
 
     @Override
-    public Page<MinifigContainingPartDTO> getMinifigsContainingPartPaginated(String partId, Integer colorId, Pageable pageable) {
-        return minifigRepository.findMinifigsContainingPart(partId, colorId, pageable);
+    public Page<MinifigContainingBlPartDTO> getMinifigsContainingPartPaginated(String partId, Integer colorId, Pageable pageable) {
+        return minifigRepository.findMinifigsContainingBlPart(partId, colorId, pageable);
     }
 
     @Override

@@ -29,6 +29,26 @@ public class ImageStorageServiceImpl implements ImageStorageService {
         return saveAndCompressImage(file, "listings", 1200, 0.85f);
     }
 
+    @Override
+    public void deleteImage(String imagePath) {
+        if (imagePath == null || imagePath.trim().isEmpty()) {
+            return;
+        }
+
+        try {
+            String relativePath = imagePath.startsWith("/") ? imagePath.substring(1) : imagePath;
+            Path fileToDelete = Paths.get(baseUploadDir, relativePath);
+
+            if (Files.exists(fileToDelete)) {
+                Files.delete(fileToDelete);
+            }
+
+        } catch (IOException e) {
+            System.err.println("Failed to delete file: " + imagePath);
+            e.printStackTrace();
+        }
+    }
+
     private String saveAndCompressImage(MultipartFile file, String folder, int maxWidth, float quality) {
         if (file.isEmpty()) {
             throw new ImageUploadException("Image file is empty!");

@@ -3,6 +3,7 @@ package ru.brickly.core.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -20,4 +21,15 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:" + baseUploadDir + "/")
                 .setCachePeriod(3600); // кэширование 1 час (можно убрать)
     }
+
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**")
+//                .allowedOriginPatterns("*")
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//                .allowedHeaders("*")
+//                .exposedHeaders("Authorization", "Content-Type", "X-Requested-With")
+//                .allowCredentials(false)
+//                .maxAge(3600);
+//    }
 }

@@ -17,6 +17,8 @@ public interface PartService {
 
     List<PartDefaultDTO> getAllPartsByIdContaining(String idContaining);
 
+    List<PartDefaultDTO> getAllPartsByBlId(String blId);
+
     Page<PartDefaultDTO> getPartsByIdContainingPaginated(Pageable pageable, String idContaining);
 
     List<PartDefaultDTO> getAllPartsByNameContaining(String nameContaining);

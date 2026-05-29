@@ -48,6 +48,11 @@ public class PartServiceImpl implements PartService {
     }
 
     @Override
+    public List<PartDefaultDTO> getAllPartsByBlId(String blId) {
+        return partRepository.findAllByBlPart_Id(blId).stream().map(PartMapper::convertToDefaultDto).collect(Collectors.toList());
+    }
+
+    @Override
     public Page<PartDefaultDTO> getPartsByIdContainingPaginated(Pageable pageable, String idContaining) {
         return partRepository.findByIdContainingIgnoreCase(idContaining, pageable).map(PartMapper::convertToDefaultDto);
     }

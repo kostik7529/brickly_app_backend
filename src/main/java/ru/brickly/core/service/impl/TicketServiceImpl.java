@@ -63,6 +63,14 @@ public class TicketServiceImpl implements TicketService {
         ticket.setUser(user);
         ticket.setMeeting(meeting);
         ticket.setPricePaid(dto.getPricePaid());
+        if (dto.getPricePaid() != 0) {
+            User creator = userRepository.findById(meeting.getCreator().getId()).orElseThrow(() -> new UserNotFoundException("Creator with id " + meeting.getCreator().getId() + " not found!"));
+            creator.setBalance(creator.getBalance() + dto.getPricePaid());
+            user.setBalance(user.getBalance() - dto.getPricePaid());
+            userRepository.save(user);
+            userRepository.save(creator);
+        }
+
         ticket.setState(dto.getState());
         return TicketMapper.convertToDefaultDto(ticketRepository.save(ticket));
     }

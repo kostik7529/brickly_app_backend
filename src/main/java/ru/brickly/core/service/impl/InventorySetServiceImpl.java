@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.brickly.core.dto.InventorySetDefaultDTO;
 import ru.brickly.core.dto.SetContainingBLMinifigDTO;
-import ru.brickly.core.dto.SetContainingPartDTO;
+import ru.brickly.core.dto.SetContainingBlPartDTO;
 import ru.brickly.core.repository.InventorySetRepository;
 import ru.brickly.core.repository.SetRepository;
 import ru.brickly.core.service.InventorySetService;
@@ -24,7 +24,7 @@ public class InventorySetServiceImpl implements InventorySetService {
     }
 
     @Override
-    public Page<SetContainingPartDTO> getSetsContainingPartPaginated(String partId, Integer colorId, Pageable pageable) {
+    public Page<SetContainingBlPartDTO> getSetsContainingPartPaginated(String partId, Integer colorId, Pageable pageable) {
         return setRepository.findSetsContainingBLPart(partId, colorId, pageable);
     }
 

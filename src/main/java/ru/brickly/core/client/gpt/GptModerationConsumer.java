@@ -13,23 +13,19 @@ import ru.brickly.core.repository.FeedbackRepository;
 @Slf4j
 public class GptModerationConsumer {
     private final FeedbackRepository feedbackRepository;
-    private final GptModerationClient gptClient;  // пока нет, создадим дальше
+    private final GptModerationClient gptClient;
 
     @RabbitListener(queues = "moderation.queue", concurrency = "1-2")
     public void processModeration(Long id) {
         log.info("Starting moderation for feedback: {}", id);
 
-        // 1. Получаем отзыв из БД
         Feedback feedback = feedbackRepository.findById(id).orElseThrow(() -> new FeedbackNotFoundException("Feedback with id " + id + " not found!"));
         if (feedback == null) {
-            log.info("Terrible fuck!");
             return;
         }
 
-        // 2. Зовем GPT
-        String result = gptClient.moderate(feedback.getComment());  // синхронно, тут и надо
+        String result = gptClient.moderate(feedback.getComment());
 
-        // 3. Сохраняем результат
         feedback.setModeration(result);
         feedbackRepository.save(feedback);
 

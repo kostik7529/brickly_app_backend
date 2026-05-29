@@ -14,7 +14,9 @@ import ru.brickly.core.repository.MinifigRepository;
 import ru.brickly.core.service.MinifigService;
 import ru.brickly.core.util.MinifigMapper;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +26,11 @@ public class MinifigServiceImpl implements MinifigService {
     @Override
     public MinifigDefaultDTO getMinifigById(String id) {
         return MinifigMapper.convertToDefaultDTO(minifigRepository.findById(id).orElseThrow(() -> new MinifigNotFoundException("Minifig with id " + id + " not found!")));
+    }
+
+    @Override
+    public List<MinifigDefaultDTO> getAllMinifigsByBlId(String blId) {
+        return minifigRepository.findAllByBlMinifig_Id(blId).stream().map(MinifigMapper::convertToDefaultDTO).collect(Collectors.toList());
     }
 
     @Override

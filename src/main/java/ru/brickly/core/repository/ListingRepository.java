@@ -17,4 +17,10 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
 
     @EntityGraph(attributePaths = {"listingImages"})
     Page<Listing> findByDescriptionContainingIgnoreCase(String descriptionContaining, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"listingImages"})
+    Page<Listing> findBySellerId(Long sellerId, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"listingImages"})
+    Page<Listing> findByDescriptionContainingIgnoreCaseOrItemIdContainingIgnoreCase(String descriptionContaining, String itemIdContaining, Pageable pageable);
 }

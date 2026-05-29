@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.brickly.core.dto.SetContainingBLMinifigDTO;
-import ru.brickly.core.dto.SetContainingPartDTO;
+import ru.brickly.core.dto.SetContainingBlPartDTO;
 
 public interface SetQueryRepository {
 
@@ -37,7 +37,7 @@ public interface SetQueryRepository {
     JOIN inventory_part ip ON ip.inventory_id = latest_inv.inventory_id
 
     JOIN bl_part blp ON blp.rb_id = ip.part_num
-                    AND blp.id = :partId
+                    AND blp.id = :blPartId
    \s
     WHERE (:colorId IS NULL OR ip.color_id = :colorId)
       AND s.set_num NOT LIKE 'fig-%'
@@ -67,14 +67,14 @@ public interface SetQueryRepository {
         JOIN inventory_part ip ON ip.inventory_id = latest_inv.inventory_id
 
         JOIN bl_part blp ON blp.rb_id = ip.part_num
-                        AND blp.id = :partId
+                        AND blp.id = :blPartId
 
         WHERE (:colorId IS NULL OR ip.color_id = :colorId)
           AND s.set_num NOT LIKE 'fig-%'
     """,
             nativeQuery = true)
-    Page<SetContainingPartDTO> findSetsContainingBLPart(
-            @Param("partId") String partId,
+    Page<SetContainingBlPartDTO> findSetsContainingBLPart(
+            @Param("blPartId") String blPartId,
             @Param("colorId") Integer colorId,
             Pageable pageable);
 

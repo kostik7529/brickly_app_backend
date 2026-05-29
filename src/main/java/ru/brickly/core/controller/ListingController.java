@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.brickly.core.dto.ListingCreateRequest;
 import ru.brickly.core.dto.ListingDefaultDTO;
 import ru.brickly.core.dto.ListingUpdateDTO;
-import ru.brickly.core.entity.Listing;
 import ru.brickly.core.service.ListingService;
 
 @RestController
@@ -47,6 +46,18 @@ public class ListingController {
     public ResponseEntity<Page<ListingDefaultDTO>> getListingsByDescriptionContainingPaginated(@PathVariable String descriptionContaining, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(listingService.getListingsByDescriptionContainingPaginated(descriptionContaining, pageable));
+    }
+
+    @GetMapping("/by_seller_id/{sellerId}")
+    public ResponseEntity<Page<ListingDefaultDTO>> getListingsBySellerIdPaginated(@PathVariable long sellerId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(listingService.getListingsBySellerIdPaginated(sellerId, pageable));
+    }
+
+    @GetMapping("/by_description_or_itemId_containing/{stringContained}")
+    public ResponseEntity<Page<ListingDefaultDTO>> getListingsByDescriptionContainingOrItemIdContainingPaginated(@PathVariable String stringContained, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "30") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(listingService.getListingsByDescriptionContainingOrItemIdContainingPaginated(stringContained, pageable));
     }
 
     @PostMapping(path = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

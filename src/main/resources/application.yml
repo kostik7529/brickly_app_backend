@@ -1,3 +1,4 @@
+# ====================== Общие настройки ======================
 spring:
   profiles:
     active: local
@@ -36,10 +37,22 @@ springdoc:
     path: /swagger-ui.html
     operationSorter: method
 
-# ====================== Общие настройки ======================
 app:
   upload:
     base-dir: uploads
+
+gpt:
+  api:
+    key: ${GPT_API_KEY}
+    url: http://104.128.139.152:8888/v1/chat/completions
+    timeout: 10000
+    model: gpt-5-nano
+    temperature: 0.3
+
+yookassa:
+  shop-id: your_shop_id
+  secret-key: your_secret_key
+  url: https://api.yookassa.ru/v3
 
 # ====================== Профиль LOCAL ======================
 ---
@@ -93,12 +106,3 @@ spring:
   app:
     upload:
       base-dir: /app/uploads
-
-# ====================== GPT ======================
-gpt:
-  api:
-    key: ${GPT_API_KEY}
-    url: http://104.128.139.152:8888/v1/chat/completions
-    timeout: 10000
-    model: gpt-5-nano
-    temperature: 0.3

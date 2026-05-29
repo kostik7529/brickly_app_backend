@@ -17,6 +17,10 @@ public interface ListingService {
 
     Page<ListingDefaultDTO> getListingsByDescriptionContainingPaginated(String descriptionContaining, Pageable pageable);
 
+    Page<ListingDefaultDTO> getListingsBySellerIdPaginated(Long sellerId, Pageable pageable);
+
+    Page<ListingDefaultDTO> getListingsByDescriptionContainingOrItemIdContainingPaginated(String stringContained, Pageable pageable);
+
     ListingDefaultDTO createListing(ListingCreateRequest request);
 
     ListingDefaultDTO updateListing(Long id, ListingUpdateDTO dto);

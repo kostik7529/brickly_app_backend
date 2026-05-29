@@ -8,10 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.brickly.core.dto.UserCreateDTO;
-import ru.brickly.core.dto.UserDefaultDTO;
-import ru.brickly.core.dto.UserFullDTO;
-import ru.brickly.core.dto.UserUpdateDTO;
+import ru.brickly.core.dto.*;
 import ru.brickly.core.service.UserService;
 
 import java.util.List;

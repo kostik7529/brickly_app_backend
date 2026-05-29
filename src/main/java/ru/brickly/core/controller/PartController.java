@@ -37,6 +37,11 @@ public class PartController {
         return ResponseEntity.ok(partService.getPartById(id));
     }
 
+    @GetMapping("/by_bl_id/{blId}")
+    public ResponseEntity<List<PartDefaultDTO>> getAllPartsByBlId(@PathVariable String blId) {
+        return ResponseEntity.ok(partService.getAllPartsByBlId(blId));
+    }
+
     @GetMapping("/by_id_containing/{idContaining}")
     public ResponseEntity<List<PartDefaultDTO>> getAllPartsByIdContaining(@PathVariable String idContaining) {
         return ResponseEntity.ok(partService.getAllPartsByIdContaining(idContaining));

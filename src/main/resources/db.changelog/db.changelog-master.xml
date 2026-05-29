@@ -26,6 +26,9 @@
     <include file="db.changelog/1.0/2026-05-22--0022-bl-part.xml"/>
     <include file="db.changelog/1.0/2026-05-23--0023-listing-image.xml"/>
     <include file="db.changelog/1.0/2026-05-23--0024-cart-item.xml"/>
+    <include file="db.changelog/1.0/2026-05-27--0025-payment.xml"/>
+    <include file="db.changelog/1.0/2026-05-28--0026-order.xml"/>
+    <include file="db.changelog/1.0/2026-05-29--0027-order-item.xml"/>
 
     <include file="db.changelog/data/2026-02-14--0001-user-data.xml"/>
     <include file="db.changelog/data/2026-02-14--0002-authority-data.xml"/>

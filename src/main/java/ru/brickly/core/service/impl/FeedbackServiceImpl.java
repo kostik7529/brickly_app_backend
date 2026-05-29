@@ -61,6 +61,7 @@ public class FeedbackServiceImpl implements FeedbackService {
             throw new SelfFeedbackException("Self feedbacks are not allowed!");
         }
         feedback.setAuthor(author);
+        feedback.setModeration("PROCESSING");
         feedback.setTarget(target);
         feedback.setComment(dto.getComment());
         feedback.setRate(dto.getRate());

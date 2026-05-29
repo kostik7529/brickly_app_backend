@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -51,6 +52,10 @@ public class Meeting {
     @Column(name = "preview_image_path")
     private String previewImagePath;
 
+    @ManyToOne
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
+
     @OneToMany(mappedBy = "meeting", cascade = CascadeType.ALL)
-    private Set<Ticket> tickets;
+    private List<Ticket> tickets;
 }

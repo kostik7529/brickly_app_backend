@@ -6,8 +6,12 @@ import ru.brickly.core.dto.MinifigCreateDTO;
 import ru.brickly.core.dto.MinifigDefaultDTO;
 import ru.brickly.core.dto.MinifigUpdateDTO;
 
+import java.util.List;
+
 public interface MinifigService {
     MinifigDefaultDTO getMinifigById(String id);
+
+    List<MinifigDefaultDTO> getAllMinifigsByBlId(String blId);
 
     Page<MinifigDefaultDTO> getMinifigsPaginated(Pageable pageable);
 
