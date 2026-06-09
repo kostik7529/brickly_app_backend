@@ -9,13 +9,15 @@ import ru.brickly.core.dto.FeedbackUpdateDTO;
 import java.util.List;
 
 public interface FeedbackService {
-    List<FeedbackDefaultDTO> getAllTargetFeedbacks(Long target_id);
+    List<FeedbackDefaultDTO> getAllTargetFeedbacks(Long targetId);
 
-    Page<FeedbackDefaultDTO> getAllTargetFeedbacksPaginated(Long target_id, Pageable pageable);
+    Page<FeedbackDefaultDTO> getAllTargetFeedbacksPaginated(Long targetId, Pageable pageable);
 
-    List<FeedbackDefaultDTO> getAllAuthorFeedbacks(Long author_id);
+    List<FeedbackDefaultDTO> getAllAuthorFeedbacks(Long authorId);
 
-    Page<FeedbackDefaultDTO> getAllAuthorFeedbacksPaginated(Long author_id, Pageable pageable);
+    Page<FeedbackDefaultDTO> getAllAuthorFeedbacksPaginated(Long authorId, Pageable pageable);
+
+    List<FeedbackDefaultDTO> getFeedbacksByAuthorIdAndTargetId(Long authorId, Long targetId);
 
     FeedbackDefaultDTO createFeedback(FeedbackCreateDTO dto);
 

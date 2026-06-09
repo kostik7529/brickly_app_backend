@@ -32,7 +32,7 @@
             </column>
 
             <column name="order_id" type="BIGINT">
-                <constraints referencedTableName="order" referencedColumnNames="id" foreignKeyName="fk_order_item_order" nullable="false"/>
+                <constraints referencedTableName="order_" referencedColumnNames="id" foreignKeyName="fk_order_item_order" nullable="false"/>
             </column>
         </createTable>
     </changeSet>

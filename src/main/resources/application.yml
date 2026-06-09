@@ -1,19 +1,27 @@
-# ====================== Общие настройки ======================
 spring:
-  profiles:
-    active: local
-
   liquibase:
     enabled: true
     change-log: classpath:db.changelog/db.changelog-master.xml
 
+  datasource:
+    url: jdbc:postgresql://postgres:5432/bricklydb
+    username: bricklyuser
+    password: bricklypass
+    driver-class-name: org.postgresql.Driver
+
   jpa:
     generate-ddl: false
+    show-sql: true
     hibernate:
       ddl-auto: none
-    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+
     listener:
       simple:
         retry:
@@ -23,12 +31,11 @@ spring:
           multiplier: 2.0
           max-interval: 10000
 
-  # ====================== Настройки загрузки файлов ======================
   servlet:
     multipart:
       enabled: true
-      max-file-size: 12MB
-      max-request-size: 55MB
+      max-file-size: 15MB
+      max-request-size: 70MB
       file-size-threshold: 2KB
       resolve-lazily: true
 
@@ -39,7 +46,7 @@ springdoc:
 
 app:
   upload:
-    base-dir: uploads
+    base-dir: /app/uploads
 
 gpt:
   api:
@@ -50,59 +57,6 @@ gpt:
     temperature: 0.3
 
 yookassa:
-  shop-id: your_shop_id
-  secret-key: your_secret_key
+  shop-id: ${YOOKASSA_SHOP_ID}
+  secret-key: ${YOOKASSA_SECRET_KEY}
   url: https://api.yookassa.ru/v3
-
-# ====================== Профиль LOCAL ======================
----
-spring:
-  config:
-    activate:
-      on-profile: local
-
-  datasource:
-    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_UPPER=false;CASE_INSENSITIVE_IDENTIFIERS=TRUE
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-
-# ====================== Профиль DOCKER ======================
----
-spring:
-  config:
-    activate:
-      on-profile: docker
-
-  datasource:
-    url: jdbc:postgresql://postgres:5432/bricklydb
-    username: bricklyuser
-    password: bricklypass
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-
-  rabbitmq:
-    host: rabbitmq
-    port: 5672
-    username: guest
-    password: guest
-
-  app:
-    upload:
-      base-dir: /app/uploads

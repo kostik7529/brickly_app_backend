@@ -15,6 +15,7 @@ public class MeetingMapper {
         meetingDefaultDTO.setTitle(meeting.getTitle());
         meetingDefaultDTO.setPreviewImagePath(meeting.getPreviewImagePath());
         meetingDefaultDTO.setDuration(meeting.getDuration());
+        meetingDefaultDTO.setRegisteredCount(meeting.getTickets() != null ? meeting.getTickets().size() : 0);
         meetingDefaultDTO.setType(MeetingTypeMapper.convertToDefaultDto(meeting.getType()));
         meetingDefaultDTO.setAddress(meeting.getAddress());
         meetingDefaultDTO.setDescription(meeting.getDescription());
@@ -33,6 +34,7 @@ public class MeetingMapper {
         meetingShortDTO.setDuration(meeting.getDuration());
         meetingShortDTO.setDescription(meeting.getDescription());
         meetingShortDTO.setTitle(meeting.getTitle());
+        meetingShortDTO.setRegisteredCount(meeting.getTickets() != null ? meeting.getTickets().size() : 0);
         meetingShortDTO.setPreviewImagePath(meeting.getPreviewImagePath());
         meetingShortDTO.setType(MeetingTypeMapper.convertToDefaultDto(meeting.getType()));
         return meetingShortDTO;

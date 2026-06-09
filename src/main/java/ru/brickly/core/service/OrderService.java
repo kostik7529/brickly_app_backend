@@ -8,9 +8,12 @@ import ru.brickly.core.dto.OrderUpdateDTO;
 
 public interface OrderService {
     OrderDefaultDTO getOrderById(long id);
+
     Page<OrderDefaultDTO> getOrdersByUserIdPaginated(long userId, Pageable pageable);
 
     OrderDefaultDTO updateOrderById(long id, OrderUpdateDTO dto);
 
     OrderDefaultDTO createOrder(OrderCreateDTO dto);
+
+    void deleteOrderById(long id);
 }

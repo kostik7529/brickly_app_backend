@@ -44,7 +44,7 @@ public class MeetingController {
     }
 
     @GetMapping("/by_creator_id/{creatorId}")
-    public ResponseEntity<Page<MeetingShortDTO>> abc(@PathVariable long creatorId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<Page<MeetingShortDTO>> getMeetingsByCreatorIdPaginated(@PathVariable long creatorId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(meetingService.getMeetingsByCreatorIdPaginated(creatorId, pageable));
     }

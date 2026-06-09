@@ -9,7 +9,6 @@ import ru.brickly.core.entity.Set;
 
 @Repository
 public interface SetRepository extends JpaRepository<Set, String>, SetQueryRepository {
-
     @Override
     @EntityGraph(attributePaths = {"theme"})
     Page<Set> findAll(Pageable pageable);

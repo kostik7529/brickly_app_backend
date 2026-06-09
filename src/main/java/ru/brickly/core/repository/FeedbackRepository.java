@@ -10,14 +10,17 @@ import java.util.List;
 
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
     @EntityGraph(attributePaths = {"target", "author"})
-    List<Feedback> findByTargetId(Long target_id);
+    List<Feedback> findByTargetId(Long targetId);
 
     @EntityGraph(attributePaths = {"target", "author"})
-    Page<Feedback> findByTargetId(Long target_id, Pageable pageable);
+    Page<Feedback> findByTargetId(Long targetId, Pageable pageable);
 
     @EntityGraph(attributePaths = {"target", "author"})
-    List<Feedback> findByAuthorId(Long target_id);
+    List<Feedback> findByAuthorId(Long authorId);
 
     @EntityGraph(attributePaths = {"target", "author"})
-    Page<Feedback> findByAuthorId(Long target_id, Pageable pageable);
+    Page<Feedback> findByAuthorId(Long authorId, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"target", "author"})
+    List<Feedback> findByAuthorIdAndTargetId(Long authorId, Long targetId);
 }

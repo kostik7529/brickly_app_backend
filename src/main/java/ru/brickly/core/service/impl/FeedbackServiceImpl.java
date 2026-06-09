@@ -2,7 +2,6 @@ package ru.brickly.core.service.impl;
 
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +12,7 @@ import ru.brickly.core.dto.FeedbackUpdateDTO;
 import ru.brickly.core.entity.Feedback;
 import ru.brickly.core.entity.User;
 import ru.brickly.core.exception.FeedbackNotFoundException;
-import ru.brickly.core.exception.SelfFeedbackException;
+import ru.brickly.core.exception.FeedbackCreatingException;
 import ru.brickly.core.exception.UserNotFoundException;
 import ru.brickly.core.repository.FeedbackRepository;
 import ru.brickly.core.repository.UserRepository;
@@ -24,7 +23,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class FeedbackServiceImpl implements FeedbackService {
     private final FeedbackRepository feedbackRepository;
@@ -32,34 +30,47 @@ public class FeedbackServiceImpl implements FeedbackService {
     private final RabbitTemplate rabbitTemplate;
 
     @Override
-    public List<FeedbackDefaultDTO> getAllTargetFeedbacks(Long target_id) {
-        return feedbackRepository.findByTargetId(target_id).stream().map(FeedbackMapper::convertToDefaultDto).collect(Collectors.toList());
+    public List<FeedbackDefaultDTO> getAllTargetFeedbacks(Long targetId) {
+        return feedbackRepository.findByTargetId(targetId).stream().map(FeedbackMapper::convertToDefaultDto).collect(Collectors.toList());
     }
 
     @Override
-    public Page<FeedbackDefaultDTO> getAllTargetFeedbacksPaginated(Long target_id, Pageable pageable) {
-        return feedbackRepository.findByTargetId(target_id, pageable).map(FeedbackMapper::convertToDefaultDto);
+    public Page<FeedbackDefaultDTO> getAllTargetFeedbacksPaginated(Long targetId, Pageable pageable) {
+        return feedbackRepository.findByTargetId(targetId, pageable).map(FeedbackMapper::convertToDefaultDto);
     }
 
     @Override
-    public List<FeedbackDefaultDTO> getAllAuthorFeedbacks(Long author_id) {
-        return feedbackRepository.findByAuthorId(author_id).stream().map(FeedbackMapper::convertToDefaultDto).collect(Collectors.toList());
+    public List<FeedbackDefaultDTO> getAllAuthorFeedbacks(Long authorId) {
+        return feedbackRepository.findByAuthorId(authorId).stream().map(FeedbackMapper::convertToDefaultDto).collect(Collectors.toList());
     }
 
     @Override
-    public Page<FeedbackDefaultDTO> getAllAuthorFeedbacksPaginated(Long author_id, Pageable pageable) {
-        return feedbackRepository.findByAuthorId(author_id, pageable).map(FeedbackMapper::convertToDefaultDto);
+    public Page<FeedbackDefaultDTO> getAllAuthorFeedbacksPaginated(Long authorId, Pageable pageable) {
+        return feedbackRepository.findByAuthorId(authorId, pageable).map(FeedbackMapper::convertToDefaultDto);
+    }
+
+    @Override
+    public List<FeedbackDefaultDTO> getFeedbacksByAuthorIdAndTargetId(Long authorId, Long targetId) {
+        return feedbackRepository.findByAuthorIdAndTargetId(authorId, targetId).stream().map(FeedbackMapper::convertToDefaultDto).collect(Collectors.toList());
     }
 
     @Override
     public FeedbackDefaultDTO createFeedback(FeedbackCreateDTO dto) {
-        User target = userRepository.findById(dto.getTarget_id()).orElseThrow(() -> new UserNotFoundException("Target with id " + dto.getTarget_id() + " not found!"));
-        User author = userRepository.findById(dto.getAuthor_id()).orElseThrow(() -> new UserNotFoundException("Author with id " + dto.getTarget_id() + " not found!"));
+        User target = userRepository.findById(dto.getTargetId()).orElseThrow(() -> new UserNotFoundException("Target with id " + dto.getTargetId() + " not found!"));
+        User author = userRepository.findById(dto.getAuthorId()).orElseThrow(() -> new UserNotFoundException("Author with id " + dto.getAuthorId() + " not found!"));
+        List<Feedback> feedbacks = feedbackRepository.findByAuthorIdAndTargetId(dto.getAuthorId(), dto.getTargetId());
+
+        if (author.getId() == target.getId()) {
+            throw new FeedbackCreatingException("Self feedbacks are not allowed!");
+        }
+        if (dto.getRate() > 5 || dto.getRate() < 1) {
+            throw new FeedbackCreatingException("Rate must be in range 1-5!");
+        }
+        if (feedbacks.size() > 1) {
+            throw new FeedbackCreatingException("Only one feedback from user to user!");
+        }
 
         Feedback feedback = new Feedback();
-        if (author.getId() == target.getId()) {
-            throw new SelfFeedbackException("Self feedbacks are not allowed!");
-        }
         feedback.setAuthor(author);
         feedback.setModeration("PROCESSING");
         feedback.setTarget(target);
@@ -67,7 +78,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedback.setRate(dto.getRate());
         Feedback result = feedbackRepository.save(feedback);
 
-        log.info("(C) Sending to rabbit: feedbackId={}", result.getId());
         rabbitTemplate.convertAndSend("moderation.queue", result.getId());
 
         return FeedbackMapper.convertToDefaultDto(result);
@@ -84,7 +94,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         if (dto.getComment() != null) {
             feedback.setComment(dto.getComment());
             feedback.setModeration("PROCESSING");
-            log.info("(U) Sending to rabbit: feedbackId={}", feedback.getId());
             rabbitTemplate.convertAndSend("moderation.queue", feedback.getId());
         } else if (dto.getModeration() != null) {
             feedback.setModeration(dto.getModeration());

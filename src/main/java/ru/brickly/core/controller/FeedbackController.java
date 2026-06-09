@@ -46,6 +46,11 @@ public class FeedbackController {
         return ResponseEntity.ok(feedbackService.getAllAuthorFeedbacksPaginated(authorId, pageable));
     }
 
+    @GetMapping("/by_author_id_and_target_id")
+    public ResponseEntity<List<FeedbackDefaultDTO>> getFeedbacksByAuthorIdAndTargetId(@RequestParam Long authorId, @RequestParam Long targetId) {
+        return ResponseEntity.ok(feedbackService.getFeedbacksByAuthorIdAndTargetId(authorId, targetId));
+    }
+
     @PostMapping("/create")
     public ResponseEntity<FeedbackDefaultDTO> createFeedback(@RequestBody FeedbackCreateDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(feedbackService.createFeedback(dto));

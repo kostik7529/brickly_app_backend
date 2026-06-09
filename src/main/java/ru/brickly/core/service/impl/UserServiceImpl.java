@@ -5,12 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.brickly.core.dto.UserCreateDTO;
-import ru.brickly.core.dto.UserDefaultDTO;
-import ru.brickly.core.dto.UserFullDTO;
-import ru.brickly.core.dto.UserUpdateDTO;
+import ru.brickly.core.dto.*;
 import ru.brickly.core.entity.Authority;
 import ru.brickly.core.entity.User;
+import ru.brickly.core.exception.AuthorityNotFoundException;
 import ru.brickly.core.exception.UserAlreadyExistsException;
 import ru.brickly.core.exception.UserNotFoundException;
 import ru.brickly.core.repository.AuthorityRepository;
@@ -37,6 +35,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserDefaultDTO> getAllUsersPaginated(Pageable pageable) {
         return userRepository.findAll(pageable).map(UserMapper::convertToDefaultDto);
+    }
+
+    @Override
+    public Page<UserDefaultDTO> getUsersByUsernameContaining(String usernameContaining, Pageable pageable) {
+        return userRepository.findByUsernameContainingIgnoreCase(usernameContaining, pageable).map(UserMapper::convertToDefaultDto);
     }
 
     @Override
@@ -109,5 +112,18 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(Long id) {
         userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found!"));
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public UserDefaultDTO changeUserAuthorities(long id, UserAuthoritiesPatchDTO dto) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found!"));
+
+        Set<Authority> authorities = dto.getAuthorities().stream().map(
+                authorityName -> authorityRepository.findByAuthority(authorityName).orElseThrow(() -> new AuthorityNotFoundException("Authority " + authorityName + " not found"))
+                ).collect(Collectors.toSet());
+
+        user.setAuthorities(authorities);
+
+        return UserMapper.convertToDefaultDto(userRepository.save(user));
     }
 }

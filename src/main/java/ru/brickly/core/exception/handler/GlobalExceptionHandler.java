@@ -23,8 +23,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(SelfFeedbackException.class)
-    public ResponseEntity<String> handleSelfFeedbackException(SelfFeedbackException e) {
+    @ExceptionHandler(FeedbackCreatingException.class)
+    public ResponseEntity<String> handleSelfFeedbackException(FeedbackCreatingException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
@@ -160,6 +160,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(OrderItemNotFoundException.class)
     public ResponseEntity<String> handleOrderItemNotFoundException(OrderItemNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AuthorityNotFoundException.class)
+    public ResponseEntity<String> handleAuthorityNotFoundException(AuthorityNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

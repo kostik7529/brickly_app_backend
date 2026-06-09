@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.brickly.core.dto.ListingCreateRequest;
 import ru.brickly.core.dto.ListingDefaultDTO;
@@ -66,6 +67,7 @@ public class ListingServiceImpl implements ListingService {
     }
 
     @Override
+    @Transactional
     public ListingDefaultDTO createListing(ListingCreateRequest request) {
         User seller = userRepository.findById(request.getSellerId()).orElseThrow(() -> new UserNotFoundException("User with id " + request.getSellerId() + " not found!"));
         

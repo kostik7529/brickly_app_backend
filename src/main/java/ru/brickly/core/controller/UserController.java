@@ -14,7 +14,7 @@ import ru.brickly.core.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/app/users")
+@RequestMapping("/api/app/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -40,6 +40,12 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserByUsername(username));
     }
 
+    @GetMapping("/by_username_containing/{usernameContaining}")
+    public ResponseEntity<Page<UserDefaultDTO>> getUsersByUsernameContaining(@PathVariable String usernameContaining, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(userService.getUsersByUsernameContaining(usernameContaining, pageable));
+    }
+
     @GetMapping("/exists/{username}")
     public ResponseEntity<String> checkUserExistence(@PathVariable String username) {
         userService.getUserByUsername(username);
@@ -54,6 +60,11 @@ public class UserController {
     @PutMapping("/update/{id}")
     public ResponseEntity<UserFullDTO> updateUser(@PathVariable Long id, @RequestBody UserUpdateDTO dto) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id, dto));
+    }
+
+    @PatchMapping("/change_authorities/{id}")
+    public ResponseEntity<UserDefaultDTO> changeUserAuthorities(@PathVariable long id, @RequestBody UserAuthoritiesPatchDTO dto) {
+        return ResponseEntity.ok(userService.changeUserAuthorities(id, dto));
     }
 
     @DeleteMapping("delete/{id}")

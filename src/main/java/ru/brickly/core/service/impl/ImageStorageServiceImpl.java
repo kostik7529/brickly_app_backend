@@ -7,6 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.brickly.core.exception.ImageUploadException;
 import ru.brickly.core.service.ImageStorageService;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -58,17 +60,19 @@ public class ImageStorageServiceImpl implements ImageStorageService {
             Path uploadPath = Paths.get(baseUploadDir, folder);
             Files.createDirectories(uploadPath);
 
-            String originalName = file.getOriginalFilename();
-            String extension = originalName != null && originalName.contains(".")
-                    ? originalName.substring(originalName.lastIndexOf("."))
-                    : ".jpg";
-
-            String newFileName = UUID.randomUUID() + extension.toLowerCase();
+            String newFileName = UUID.randomUUID() + ".jpg";
             Path filePath = uploadPath.resolve(newFileName);
 
-            Thumbnails.of(file.getInputStream())
+            BufferedImage originalImage = ImageIO.read(file.getInputStream());
+
+            if (originalImage == null) {
+                throw new ImageUploadException("Failed to read image. Supported types: JPG, PNG, WebP");
+            }
+
+            Thumbnails.of(originalImage)
                     .width(maxWidth)
                     .outputQuality(quality)
+                    .outputFormat("jpg")
                     .toFile(filePath.toFile());
 
             return "/uploads/" + folder + "/" + newFileName;

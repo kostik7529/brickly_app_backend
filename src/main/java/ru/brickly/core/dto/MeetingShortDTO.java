@@ -13,5 +13,6 @@ public class MeetingShortDTO {
     private Integer duration;
     private String address;
     private String description;
+    private int registeredCount;
     private MeetingTypeDefaultDTO type;
 }

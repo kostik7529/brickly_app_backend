@@ -13,6 +13,7 @@ public class MeetingDefaultDTO {
     private String previewImagePath;
     private Integer duration;
     private String address;
+    private int registeredCount;
     private MeetingTypeDefaultDTO type;
     private int ticketPrice;
     private String description;

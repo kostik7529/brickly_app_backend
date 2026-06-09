@@ -31,16 +31,15 @@ public class WebSecurityConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/api/app/users/exists/**").permitAll()
                         .requestMatchers("/api/app/users/register").permitAll()
 
-                        .requestMatchers(HttpMethod.DELETE, "/api/app/users/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE).hasAnyAuthority("ROLE_SUPERADMIN", "ROLE_ADMIN")
+                        .requestMatchers("/api/app/authorities").hasAnyAuthority("ROLE_SUPERADMIN", "ROLE_ADMIN")
                         .requestMatchers("/api/app/users/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .anyRequest().authenticated()
                 ).httpBasic(httpBase -> {})
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
-
 
         return httpSecurity.build();
     }

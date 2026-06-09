@@ -22,4 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Override
     @EntityGraph(attributePaths = {"authorities", "cartItems"})
     Page<User> findAll(Pageable pageable);
+
+    @EntityGraph(attributePaths = {"authorities", "cartItems"})
+    Page<User> findByUsernameContainingIgnoreCase(String usernameContaining, Pageable pageable);
 }

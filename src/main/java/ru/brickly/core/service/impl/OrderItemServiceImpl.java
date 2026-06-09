@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.brickly.core.dto.OrderItemDefaultDTO;
 import ru.brickly.core.dto.OrderItemUpdateDTO;
+import ru.brickly.core.dto.OrderItemWithOrderDTO;
 import ru.brickly.core.entity.OrderItem;
 import ru.brickly.core.entity.User;
 import ru.brickly.core.exception.OrderItemNotFoundException;
@@ -13,11 +14,19 @@ import ru.brickly.core.repository.UserRepository;
 import ru.brickly.core.service.OrderItemService;
 import ru.brickly.core.util.OrderItemMapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class OrderItemServiceImpl implements OrderItemService {
     private final OrderItemRepository orderItemRepository;
     private final UserRepository userRepository;
+
+    @Override
+    public List<OrderItemWithOrderDTO> getOrderItemsBySellerId(long id) {
+        return orderItemRepository.findByListing_Seller_Id(id).stream().map(OrderItemMapper::convertToWithOrderDto).collect(Collectors.toList());
+    }
 
     @Override
     public OrderItemDefaultDTO updateOrderItemById(long id, OrderItemUpdateDTO dto) {

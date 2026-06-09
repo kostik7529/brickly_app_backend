@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderDefaultDTO> getOrdersByUserIdPaginated(long userId, Pageable pageable) {
-        return orderRepository.findByUser_Id(userId, pageable);
+        return orderRepository.findByUser_Id(userId, pageable).map(OrderMapper::convertToDefaultDto);
     }
 
     @Override
@@ -90,5 +90,11 @@ public class OrderServiceImpl implements OrderService {
         userRepository.save(buyer);
 
         return OrderMapper.convertToDefaultDto(savedOrder);
+    }
+
+    @Override
+    public void deleteOrderById(long id) {
+        orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Order with id " + id + " not found!"));
+        orderRepository.deleteById(id);
     }
 }
